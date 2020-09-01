@@ -13,6 +13,7 @@ public class AlertsApplication {
 
 	public static void main(String[] args) throws JsonProcessingException, IOException {
 		Data data = new Data();
+		data.init();
 		data.load();
 		SpringApplication.run(AlertsApplication.class, args);
 	}

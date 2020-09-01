@@ -1,5 +1,10 @@
 package com.safetynet.alerts.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+@JsonFilter("DynamicFilter")
 public class Person {
 	
 	private String firstName;
@@ -9,18 +14,11 @@ public class Person {
 	private String zip;
 	private String phone;
 	private String email;
-	
-	
-	public Person(String firstName, String lastName, String address, String city, String zip, String phone,
-			String email) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.zip = zip;
-		this.phone = phone;
-		this.email = email;
-	}
+	private List<Person> famillyMembers;
+	private String fireStationNumber;
+	private int age;
+	private List<String> medications;
+	private List<String> allergies;
 
 
 	public String getFirstName() {
@@ -93,10 +91,53 @@ public class Person {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
-				+ ", zip=" + zip + ", phone=" + phone + ", email=" + email + "]";
+	public List<Person> getFamillyMembers() {
+		return famillyMembers;
+	}
+
+
+	public void setFamillyMembers(List<Person> famillyMembers) {
+		this.famillyMembers = famillyMembers;
+	}
+
+
+	public String getFireStationNumber() {
+		return fireStationNumber;
+	}
+
+
+	public void setFireStationNumber(String fireStationNumber) {
+		this.fireStationNumber = fireStationNumber;
+	}
+
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+	public List<String> getMedications() {
+		return medications;
+	}
+
+
+	public void setMedications(List<String> medications) {
+		this.medications = medications;
+	}
+
+
+	public List<String> getAllergies() {
+		return allergies;
+	}
+
+
+	public void setAllergies(List<String> allergies) {
+		this.allergies = allergies;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.safetynet.alerts.data;
+ package com.safetynet.alerts.data;
 
 import java.io.File;
 import java.io.IOException;

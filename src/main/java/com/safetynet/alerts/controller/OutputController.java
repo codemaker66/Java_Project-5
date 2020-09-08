@@ -15,143 +15,145 @@ import com.safetynet.alerts.service.OutputService;
 
 @RestController
 public class OutputController {
-	
-	  @GetMapping(value = "/firestation")
-	  public MappingJacksonValue getPersonsByFireStationNumber(@RequestParam(name = "stationNumber") String stationNumber) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Object> persons = output.findPersonsByFireStationNumber(stationNumber);
 
-	      SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("firstName",
-	    		  "lastName", "address", "phone");
+	@GetMapping(value = "/firestation")
+	public MappingJacksonValue getPersonsByFireStationNumber(
+			@RequestParam(name = "stationNumber") String stationNumber) {
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+		OutputService output = new OutputService();
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+		List<Object> persons = output.findPersonsByFireStationNumber(stationNumber);
 
-	      personsFilter.setFilters(filterList);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("firstName", "lastName",
+				"address", "phone");
 
-	      return personsFilter;
-	  }
-	  
-	  @GetMapping(value = "/childAlert")
-	  public MappingJacksonValue getChildrensByAddress(@RequestParam(name = "address") String address) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Person> persons = output.findChildrensByAddress(address);
-		  
-		  SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("firstName", 
-				  "lastName", "age", "famillyMembers");
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+		personsFilter.setFilters(filterList);
 
-	      personsFilter.setFilters(filterList);
+		return personsFilter;
+	}
 
-	      return personsFilter;
-		  
-	  }
-	  
-	 @GetMapping(value = "/phoneAlert")
-	  public MappingJacksonValue getPhoneNumbersByFireStationNumber(@RequestParam(name = "firestation") String firestation) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Person> persons = output.findPhoneNumbersByFireStationNumber(firestation);
-		  
-		  SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("phone");
+	@GetMapping(value = "/childAlert")
+	public MappingJacksonValue getChildrensByAddress(@RequestParam(name = "address") String address) {
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+		OutputService output = new OutputService();
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+		List<Person> persons = output.findChildrensByAddress(address);
 
-	      personsFilter.setFilters(filterList);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("firstName", "lastName", "age",
+				"famillyMembers");
 
-	      return personsFilter;
-		  
-	  }
-	  
-	  @GetMapping(value = "/fire")
-	  public MappingJacksonValue getPersonsByAddress(@RequestParam(name = "address") String address) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Object> persons = output.findPersonsByAddress(address);
-		  
-		  SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("lastName"
-				  , "phone", "age", "medications", "allergies");
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+		personsFilter.setFilters(filterList);
 
-	      personsFilter.setFilters(filterList);
+		return personsFilter;
 
-	      return personsFilter;
-		  
-	  }
-	  
-	  @GetMapping(value = "/flood/stations")
-	  public MappingJacksonValue getPersonsByFireStationNumbers(@RequestParam(name = "stations") List<String> stations) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Object> persons = output.findPersonsByFireStationNumbers(stations);
-		  
-		  SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("lastName",
-				  "phone", "age", "medications", "allergies");
+	}
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+	@GetMapping(value = "/phoneAlert")
+	public MappingJacksonValue getPhoneNumbersByFireStationNumber(
+			@RequestParam(name = "firestation") String firestation) {
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+		OutputService output = new OutputService();
 
-	      personsFilter.setFilters(filterList);
+		List<Person> persons = output.findPhoneNumbersByFireStationNumber(firestation);
 
-	      return personsFilter;
-		  
-	  }
-	  
-	  @GetMapping(value = "/personInfo")
-	  public MappingJacksonValue getPersonByFirstAndLastName(@RequestParam(name = "firstName") String firstName, 
-			  @RequestParam(name = "lastName") String lastName) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Person> persons = output.findPersonByFirstAndLastName(firstName, lastName);
-		  
-		  SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("lastName", 
-				  "address", "age", "email", "medications", "allergies");
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("phone");
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
 
-	      personsFilter.setFilters(filterList);
+		personsFilter.setFilters(filterList);
 
-	      return personsFilter;
-		  
-	  }
-	  
-	  @GetMapping(value = "/communityEmail")
-	  public MappingJacksonValue getEmailsByCity(@RequestParam(name = "city") String city) {
-		  
-		  OutputService output = new OutputService();
-	      
-	      List<Person> persons = output.findEmailsByCity(city);
-		  
-		  SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("email");
+		return personsFilter;
 
-	      FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+	}
 
-	      MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+	@GetMapping(value = "/fire")
+	public MappingJacksonValue getPersonsByAddress(@RequestParam(name = "address") String address) {
 
-	      personsFilter.setFilters(filterList);
+		OutputService output = new OutputService();
 
-	      return personsFilter;
-		  
-	  }
+		List<Object> persons = output.findPersonsByAddress(address);
+
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("lastName", "phone", "age",
+				"medications", "allergies");
+
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+
+		personsFilter.setFilters(filterList);
+
+		return personsFilter;
+
+	}
+
+	@GetMapping(value = "/flood/stations")
+	public MappingJacksonValue getPersonsByFireStationNumbers(@RequestParam(name = "stations") List<String> stations) {
+
+		OutputService output = new OutputService();
+
+		List<Object> persons = output.findPersonsByFireStationNumbers(stations);
+
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("lastName", "phone", "age",
+				"medications", "allergies");
+
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+
+		personsFilter.setFilters(filterList);
+
+		return personsFilter;
+
+	}
+
+	@GetMapping(value = "/personInfo")
+	public MappingJacksonValue getPersonByFirstAndLastName(@RequestParam(name = "firstName") String firstName,
+			@RequestParam(name = "lastName") String lastName) {
+
+		OutputService output = new OutputService();
+
+		List<Person> persons = output.findPersonByFirstAndLastName(firstName, lastName);
+
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("lastName", "address", "age",
+				"email", "medications", "allergies");
+
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+
+		personsFilter.setFilters(filterList);
+
+		return personsFilter;
+
+	}
+
+	@GetMapping(value = "/communityEmail")
+	public MappingJacksonValue getEmailsByCity(@RequestParam(name = "city") String city) {
+
+		OutputService output = new OutputService();
+
+		List<Person> persons = output.findEmailsByCity(city);
+
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("email");
+
+		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", filter);
+
+		MappingJacksonValue personsFilter = new MappingJacksonValue(persons);
+
+		personsFilter.setFilters(filterList);
+
+		return personsFilter;
+
+	}
 
 }

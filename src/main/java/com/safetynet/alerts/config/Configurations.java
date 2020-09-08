@@ -7,11 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Configurations {
-	
+
 	@Bean
-	public HttpTraceRepository htttpTraceRepository()
-	{
-	  return new InMemoryHttpTraceRepository();
+	public HttpTraceRepository htttpTraceRepository() {
+		return new InMemoryHttpTraceRepository();
 	}
 
 }

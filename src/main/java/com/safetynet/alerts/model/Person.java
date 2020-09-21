@@ -1,24 +1,33 @@
 package com.safetynet.alerts.model;
 
-import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import org.hibernate.validator.constraints.Length;
 
-@JsonFilter("DynamicFilter")
 public class Person {
-
+	@NotNull(message = "firstName can not be empty")
+	@Length(min = 1, message = "firstName must have at least one character")
 	private String firstName;
+	@NotNull(message = "lastName can not be empty")
+	@Length(min = 1, message = "lastName must have at least one character")
 	private String lastName;
+	@NotNull(message = "address can not be empty")
+	@Length(min = 10, message = "address must have at least ten characters")
 	private String address;
+	@NotNull(message = "city can not be empty")
+	@Length(min = 2, message = "city must have at least two characters")
 	private String city;
-	private String zip;
+	@NotNull(message = "zip can not be empty")
+	@Min(value = 1, message = "zip must be at least one number")
+	private int zip;
+	@NotNull(message = "phone can not be empty")
+	@Length(max = 10, message = "phone must have ten characters only")
 	private String phone;
+	@NotNull(message = "email can not be empty")
+	@Email(message = "email must be a valid email")
 	private String email;
-	private List<Person> famillyMembers;
-	private String fireStationNumber;
-	private int age;
-	private List<String> medications;
-	private List<String> allergies;
 
 	public String getFirstName() {
 		return firstName;
@@ -52,11 +61,11 @@ public class Person {
 		this.city = city;
 	}
 
-	public String getZip() {
+	public int getZip() {
 		return zip;
 	}
 
-	public void setZip(String zip) {
+	public void setZip(int zip) {
 		this.zip = zip;
 	}
 
@@ -74,46 +83,6 @@ public class Person {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Person> getFamillyMembers() {
-		return famillyMembers;
-	}
-
-	public void setFamillyMembers(List<Person> famillyMembers) {
-		this.famillyMembers = famillyMembers;
-	}
-
-	public String getFireStationNumber() {
-		return fireStationNumber;
-	}
-
-	public void setFireStationNumber(String fireStationNumber) {
-		this.fireStationNumber = fireStationNumber;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public List<String> getMedications() {
-		return medications;
-	}
-
-	public void setMedications(List<String> medications) {
-		this.medications = medications;
-	}
-
-	public List<String> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(List<String> allergies) {
-		this.allergies = allergies;
 	}
 
 }

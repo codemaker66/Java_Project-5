@@ -13,13 +13,32 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public void addAPersonToTheList(Person person) {
-		Data.persons.add(person);
+	public boolean addAPersonToTheList(Person person) {
+
+		boolean check = true;
+
+		for (int i = 0; i < Data.persons.size(); i++) {
+			if (Data.persons.get(i).getFirstName().equals(person.getFirstName())
+					&& Data.persons.get(i).getLastName().equals(person.getLastName())) {
+				check = false;
+				break;
+			}
+		}
+
+		if (check == true) {
+			Data.persons.add(person);
+			return check;
+		}
+
+		return check;
 
 	}
 
 	@Override
-	public void updateAPersonInTheList(Person person) {
+	public boolean updateAPersonInTheList(Person person) {
+
+		boolean check = false;
+
 		for (int i = 0; i < Data.persons.size(); i++) {
 			if (Data.persons.get(i).getFirstName().equals(person.getFirstName())
 					&& Data.persons.get(i).getLastName().equals(person.getLastName())) {
@@ -28,19 +47,30 @@ public class PersonDaoImpl implements PersonDao {
 				Data.persons.get(i).setZip(person.getZip());
 				Data.persons.get(i).setPhone(person.getPhone());
 				Data.persons.get(i).setEmail(person.getEmail());
+				check = true;
+				break;
 			}
 		}
+
+		return check;
 
 	}
 
 	@Override
-	public void deleteAPersonFromTheList(String firstName, String lastName) {
+	public boolean deleteAPersonFromTheList(String firstName, String lastName) {
+
+		boolean check = false;
+
 		for (int i = 0; i < Data.persons.size(); i++) {
 			if (Data.persons.get(i).getFirstName().equals(firstName)
 					&& Data.persons.get(i).getLastName().equals(lastName)) {
 				Data.persons.remove(i);
+				check = true;
+				break;
 			}
 		}
+
+		return check;
 
 	}
 

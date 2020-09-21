@@ -8,10 +8,10 @@ public interface PersonDao {
 
 	public List<Person> retrieveAllPersonsFromTheList();
 
-	public void addAPersonToTheList(Person person);
+	public boolean addAPersonToTheList(Person person);
 
-	public void updateAPersonInTheList(Person person);
+	public boolean updateAPersonInTheList(Person person);
 
-	public void deleteAPersonFromTheList(String firstName, String lastName);
+	public boolean deleteAPersonFromTheList(String firstName, String lastName);
 
 }

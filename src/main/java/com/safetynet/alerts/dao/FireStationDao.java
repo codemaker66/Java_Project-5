@@ -8,10 +8,10 @@ public interface FireStationDao {
 
 	public List<FireStation> retrieveAllFireStationsFromTheList();
 
-	public void addAFireStationToTheList(FireStation fireStation);
+	public boolean addAFireStationToTheList(FireStation fireStation);
 
-	public void updateAFireStationInTheList(FireStation fireStation);
+	public boolean updateAFireStationInTheList(FireStation fireStation);
 
-	public void deleteAFireStationFromTheList(String station, String address);
+	public boolean deleteAFireStationFromTheList(int station, String address);
 
 }

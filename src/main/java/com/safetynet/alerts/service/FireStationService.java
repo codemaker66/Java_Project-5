@@ -15,27 +15,39 @@ public class FireStationService {
 
 	}
 
-	public void addAFireStation(FireStation fireStation) {
+	public boolean addAFireStation(FireStation fireStation) {
 
 		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
 
-		fireStationDaoImpl.addAFireStationToTheList(fireStation);
+		if (fireStationDaoImpl.addAFireStationToTheList(fireStation)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
-	public void updateAFireStation(FireStation fireStation) {
+	public boolean updateAFireStation(FireStation fireStation) {
 
 		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
 
-		fireStationDaoImpl.updateAFireStationInTheList(fireStation);
+		if (fireStationDaoImpl.updateAFireStationInTheList(fireStation)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
-	public void deleteAFireStation(String station, String address) {
+	public boolean deleteAFireStation(int station, String address) {
 
 		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
 
-		fireStationDaoImpl.deleteAFireStationFromTheList(station, address);
+		if (fireStationDaoImpl.deleteAFireStationFromTheList(station, address)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 

@@ -15,27 +15,39 @@ public class MedicalRecordService {
 
 	}
 
-	public void addAMedicalRecord(MedicalRecord medicalRecord) {
+	public boolean addAMedicalRecord(MedicalRecord medicalRecord) {
 
 		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
 
-		medicalRecordDaoImpl.addAMedicalRecordToTheList(medicalRecord);
+		if (medicalRecordDaoImpl.addAMedicalRecordToTheList(medicalRecord)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
-	public void updateAMedicalRecord(MedicalRecord medicalRecord) {
+	public boolean updateAMedicalRecord(MedicalRecord medicalRecord) {
 
 		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
 
-		medicalRecordDaoImpl.updateAMedicalRecordInTheList(medicalRecord);
+		if (medicalRecordDaoImpl.updateAMedicalRecordInTheList(medicalRecord)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
-	public void deleteAMedicalRecord(String firstName, String lastName) {
+	public boolean deleteAMedicalRecord(String firstName, String lastName) {
 
 		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
 
-		medicalRecordDaoImpl.deleteAMedicalRecordFromTheList(firstName, lastName);
+		if (medicalRecordDaoImpl.deleteAMedicalRecordFromTheList(firstName, lastName)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 

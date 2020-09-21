@@ -1,9 +1,17 @@
 package com.safetynet.alerts.model;
 
-public class FireStation {
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
+public class FireStation {
+	@NotNull(message = "address can not be null")
+	@Length(min = 10, message = "address must have at least ten characters")
 	private String address;
-	private String station;
+	@NotNull(message = "station can not be null")
+	@Min(value = 1, message = "station must be at least one number")
+	private int station;
 
 	public String getAddress() {
 		return address;
@@ -13,11 +21,11 @@ public class FireStation {
 		this.address = address;
 	}
 
-	public String getStation() {
+	public int getStation() {
 		return station;
 	}
 
-	public void setStation(String station) {
+	public void setStation(int station) {
 		this.station = station;
 	}
 

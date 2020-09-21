@@ -15,27 +15,39 @@ public class PersonService {
 
 	}
 
-	public void addAPerson(Person person) {
+	public boolean addAPerson(Person person) {
 
 		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
 
-		personDaoImpl.addAPersonToTheList(person);
+		if (personDaoImpl.addAPersonToTheList(person)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
-	public void updateAPerson(Person person) {
+	public boolean updateAPerson(Person person) {
 
 		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
 
-		personDaoImpl.updateAPersonInTheList(person);
+		if (personDaoImpl.updateAPersonInTheList(person)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
-	public void deleteAPerson(String firstName, String lastName) {
+	public boolean deleteAPerson(String firstName, String lastName) {
 
 		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
 
-		personDaoImpl.deleteAPersonFromTheList(firstName, lastName);
+		if (personDaoImpl.deleteAPersonFromTheList(firstName, lastName)) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,11 +21,20 @@ import com.safetynet.alerts.model.Errors;
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
 	@Override
+	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		return ResponseEntity.status(status).body("This request method is not allowed");
+	}
+
+	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 
-		return ResponseEntity.status(status).body(
-				request.getParameterNames().next() + " must not be null and must be of type " + ex.getRequiredType());
+		return ResponseEntity.status(status)
+				.body(request.getParameterNames().next() + " must not be null and must be of type "
+						+ (ex.getRequiredType().getName() == "java.util.List"
+								? ex.getRequiredType().getName() + " that contains integers"
+								: ex.getRequiredType().getName()));
 	}
 
 	@Override

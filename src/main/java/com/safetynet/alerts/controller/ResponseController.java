@@ -98,6 +98,10 @@ public class ResponseController {
 	@GetMapping(value = "/flood/stations")
 	public MappingJacksonValue getPersonsByFireStationNumbers(@RequestParam(name = "stations") List<Integer> stations) {
 
+		if (stations.isEmpty()) {
+			throw new ResourceException(HttpStatus.NOT_FOUND, "You didn't provide any station number");
+		}
+
 		ResponseService responseService = new ResponseService();
 
 		Response response = responseService.findPersonsByFireStationNumbers(stations);

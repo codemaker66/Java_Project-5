@@ -5,11 +5,11 @@ import java.util.List;
 import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.Person;
 
-public class PersonDaoImpl implements PersonDao {
+public class PersonDaoImpl extends Data implements PersonDao {
 
 	@Override
 	public List<Person> retrieveAllPersonsFromTheList() {
-		return Data.persons;
+		return persons;
 	}
 
 	@Override
@@ -17,16 +17,16 @@ public class PersonDaoImpl implements PersonDao {
 
 		boolean check = true;
 
-		for (int i = 0; i < Data.persons.size(); i++) {
-			if (Data.persons.get(i).getFirstName().equals(person.getFirstName())
-					&& Data.persons.get(i).getLastName().equals(person.getLastName())) {
+		for (int i = 0; i < persons.size(); i++) {
+			if (persons.get(i).getFirstName().equals(person.getFirstName())
+					&& persons.get(i).getLastName().equals(person.getLastName())) {
 				check = false;
 				break;
 			}
 		}
 
-		if (check == true) {
-			Data.persons.add(person);
+		if (check) {
+			persons.add(person);
 			return check;
 		}
 
@@ -39,14 +39,14 @@ public class PersonDaoImpl implements PersonDao {
 
 		boolean check = false;
 
-		for (int i = 0; i < Data.persons.size(); i++) {
-			if (Data.persons.get(i).getFirstName().equals(person.getFirstName())
-					&& Data.persons.get(i).getLastName().equals(person.getLastName())) {
-				Data.persons.get(i).setAddress(person.getAddress());
-				Data.persons.get(i).setCity(person.getCity());
-				Data.persons.get(i).setZip(person.getZip());
-				Data.persons.get(i).setPhone(person.getPhone());
-				Data.persons.get(i).setEmail(person.getEmail());
+		for (int i = 0; i < persons.size(); i++) {
+			if (persons.get(i).getFirstName().equals(person.getFirstName())
+					&& persons.get(i).getLastName().equals(person.getLastName())) {
+				persons.get(i).setAddress(person.getAddress());
+				persons.get(i).setCity(person.getCity());
+				persons.get(i).setZip(person.getZip());
+				persons.get(i).setPhone(person.getPhone());
+				persons.get(i).setEmail(person.getEmail());
 				check = true;
 				break;
 			}
@@ -61,10 +61,9 @@ public class PersonDaoImpl implements PersonDao {
 
 		boolean check = false;
 
-		for (int i = 0; i < Data.persons.size(); i++) {
-			if (Data.persons.get(i).getFirstName().equals(firstName)
-					&& Data.persons.get(i).getLastName().equals(lastName)) {
-				Data.persons.remove(i);
+		for (int i = 0; i < persons.size(); i++) {
+			if (persons.get(i).getFirstName().equals(firstName) && persons.get(i).getLastName().equals(lastName)) {
+				persons.remove(i);
 				check = true;
 				break;
 			}

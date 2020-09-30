@@ -31,10 +31,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 			HttpStatus status, WebRequest request) {
 
 		return ResponseEntity.status(status)
-				.body(request.getParameterNames().next() + " must not be null and must be of type "
-						+ (ex.getRequiredType().getName() == "java.util.List"
-								? ex.getRequiredType().getName() + " that contains integers"
-								: ex.getRequiredType().getName()));
+				.body("The parameter : " + request.getParameterNames().next() + " is null or not valid");
 	}
 
 	@Override
@@ -56,16 +53,16 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(ResourceException.class)
-	public ResponseEntity<String> handleException(ResourceException e) {
+	public ResponseEntity<String> handleResourceException(ResourceException e) {
 		return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
 	}
 
-	@ExceptionHandler(ResourceException2.class)
-	public ResponseEntity<Object> ResponseEntity(ResourceException2 e) {
-		return ResponseEntity(e.getHttpStatus(), e.getMessage(), e.getDetails());
+	@ExceptionHandler(PropertiesException.class)
+	public ResponseEntity<Object> handlePropertiesException(PropertiesException e) {
+		return response(e.getHttpStatus(), e.getMessage(), e.getDetails());
 	}
 
-	private ResponseEntity<Object> ResponseEntity(HttpStatus httpStatus, String message, List<String> details) {
+	private ResponseEntity<Object> response(HttpStatus httpStatus, String message, List<String> details) {
 		Errors e = new Errors();
 		e.setMessage(message);
 		e.setDetails(details);

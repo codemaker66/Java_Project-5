@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonFilter("DynamicFilter")
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Output {
+public class Output extends ResponseFormat {
 
 	private String firstName;
 	private String lastName;

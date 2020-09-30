@@ -7,9 +7,9 @@ import com.safetynet.alerts.model.FireStation;
 
 public class FireStationService {
 
-	public List<FireStation> getAllFireStations() {
+	private FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
 
-		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
+	public List<FireStation> getAllFireStations() {
 
 		return fireStationDaoImpl.retrieveAllFireStationsFromTheList();
 
@@ -17,37 +17,37 @@ public class FireStationService {
 
 	public boolean addAFireStation(FireStation fireStation) {
 
-		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
+		boolean check = false;
 
 		if (fireStationDaoImpl.addAFireStationToTheList(fireStation)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 
 	public boolean updateAFireStation(FireStation fireStation) {
 
-		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
+		boolean check = false;
 
 		if (fireStationDaoImpl.updateAFireStationInTheList(fireStation)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 
 	public boolean deleteAFireStation(int station, String address) {
 
-		FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
+		boolean check = false;
 
 		if (fireStationDaoImpl.deleteAFireStationFromTheList(station, address)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 

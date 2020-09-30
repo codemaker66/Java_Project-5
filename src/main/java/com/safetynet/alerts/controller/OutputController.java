@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.safetynet.alerts.exceptions.ResourceException;
 import com.safetynet.alerts.filters.Filter;
-import com.safetynet.alerts.model.Response;
-import com.safetynet.alerts.service.ResponseService;
+import com.safetynet.alerts.model.Output;
+import com.safetynet.alerts.service.OutputService;
 
 @RestController
-public class ResponseController {
+public class OutputController {
+
+	private OutputService outputService = new OutputService();
 
 	@GetMapping(value = "/firestation")
 	public MappingJacksonValue getPersonsByFireStationNumber(@RequestParam(name = "stationNumber") int stationNumber) {
 
-		ResponseService responseService = new ResponseService();
+		Output output = outputService.findPersonsByFireStationNumber(stationNumber);
 
-		Response response = responseService.findPersonsByFireStationNumber(stationNumber);
-
-		if (response.getPersons() != null && !response.getPersons().isEmpty()) {
+		if (output.getPersons() != null && !output.getPersons().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 1);
+			return filter.jsonFilter(output, 1);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
@@ -38,15 +38,13 @@ public class ResponseController {
 	@GetMapping(value = "/childAlert")
 	public MappingJacksonValue getChildrensByAddress(@RequestParam(name = "address") String address) {
 
-		ResponseService responseService = new ResponseService();
+		Output output = outputService.findChildrensByAddress(address);
 
-		Response response = responseService.findChildrensByAddress(address);
-
-		if (response.getChildrens() != null && !response.getChildrens().isEmpty()) {
+		if (output.getChildrens() != null && !output.getChildrens().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 0);
+			return filter.jsonFilter(output, 0);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND, address.isEmpty() ? "You didn't provide an address"
@@ -58,15 +56,13 @@ public class ResponseController {
 	@GetMapping(value = "/phoneAlert")
 	public MappingJacksonValue getPhoneNumbersByFireStationNumber(@RequestParam(name = "firestation") int firestation) {
 
-		ResponseService responseService = new ResponseService();
+		Output output = outputService.findPhoneNumbersByFireStationNumber(firestation);
 
-		Response response = responseService.findPhoneNumbersByFireStationNumber(firestation);
-
-		if (response.getPhoneNumbers() != null && !response.getPhoneNumbers().isEmpty()) {
+		if (output.getPhoneNumbers() != null && !output.getPhoneNumbers().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 0);
+			return filter.jsonFilter(output, 0);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
@@ -78,15 +74,13 @@ public class ResponseController {
 	@GetMapping(value = "/fire")
 	public MappingJacksonValue getPersonsByAddress(@RequestParam(name = "address") String address) {
 
-		ResponseService responseService = new ResponseService();
+		Output output = outputService.findPersonsByAddress(address);
 
-		Response response = responseService.findPersonsByAddress(address);
-
-		if (response.getPersons() != null && !response.getPersons().isEmpty()) {
+		if (output.getPersons() != null && !output.getPersons().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 2);
+			return filter.jsonFilter(output, 2);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND, address.isEmpty() ? "You didn't provide an address"
@@ -98,23 +92,18 @@ public class ResponseController {
 	@GetMapping(value = "/flood/stations")
 	public MappingJacksonValue getPersonsByFireStationNumbers(@RequestParam(name = "stations") List<Integer> stations) {
 
-		if (stations.isEmpty()) {
-			throw new ResourceException(HttpStatus.NOT_FOUND, "You didn't provide any station number");
-		}
+		Output output = outputService.findPersonsByFireStationNumbers(stations);
 
-		ResponseService responseService = new ResponseService();
-
-		Response response = responseService.findPersonsByFireStationNumbers(stations);
-
-		if (response.getPersonsGrouped() != null && !response.getPersonsGrouped().isEmpty()) {
+		if (output.getPersonsGrouped() != null && !output.getPersonsGrouped().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 3);
+			return filter.jsonFilter(output, 2);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					"There are no persons served by these firestation numbers : " + stations);
+					(stations.isEmpty() ? "You didn't provide any station number"
+							: "There are no persons served by these firestation numbers : " + stations));
 		}
 
 	}
@@ -123,15 +112,13 @@ public class ResponseController {
 	public MappingJacksonValue getPersonByFirstAndLastName(@RequestParam(name = "firstName") String firstName,
 			@RequestParam(name = "lastName") String lastName) {
 
-		ResponseService responseService = new ResponseService();
+		Output output = outputService.findPersonByFirstAndLastName(firstName, lastName);
 
-		Response response = responseService.findPersonByFirstAndLastName(firstName, lastName);
-
-		if (response.getPersons() != null && !response.getPersons().isEmpty()) {
+		if (output.getPersons() != null && !output.getPersons().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 0);
+			return filter.jsonFilter(output, 0);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
@@ -145,15 +132,13 @@ public class ResponseController {
 	@GetMapping(value = "/communityEmail")
 	public MappingJacksonValue getEmailsByCity(@RequestParam(name = "city") String city) {
 
-		ResponseService responseService = new ResponseService();
+		Output output = outputService.findEmailsByCity(city);
 
-		Response response = responseService.findEmailsByCity(city);
-
-		if (response.getEmails() != null && !response.getEmails().isEmpty()) {
+		if (output.getEmails() != null && !output.getEmails().isEmpty()) {
 
 			Filter filter = new Filter();
 
-			return filter.JsonFilter(response, 0);
+			return filter.jsonFilter(output, 0);
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,

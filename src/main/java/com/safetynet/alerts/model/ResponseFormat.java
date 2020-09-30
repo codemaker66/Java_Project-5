@@ -2,12 +2,10 @@ package com.safetynet.alerts.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonFilter("DynamicFilter")
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Response {
+public class ResponseFormat {
 
 	private String fireStation;
 	private List<Output> persons;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.safetynet.alerts.model.Output;
 
-public interface ResponseDao {
+public interface OutputDao {
 
 	public List<Output> retrievePersonsByFireStationNumber(int fireStationNumber);
 

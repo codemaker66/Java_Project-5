@@ -5,13 +5,13 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.safetynet.alerts.model.Response;
+import com.safetynet.alerts.model.Output;
 
 public class Filter {
 
-	public MappingJacksonValue JsonFilter(Response list, int option) {
+	public MappingJacksonValue jsonFilter(Output list, int option) {
 
-		Response data = list;
+		Output data = list;
 		SimpleBeanPropertyFilter filter = null;
 
 		switch (option) {
@@ -19,10 +19,7 @@ public class Filter {
 			filter = SimpleBeanPropertyFilter.serializeAllExcept("age");
 			break;
 		case 2:
-			filter = SimpleBeanPropertyFilter.serializeAllExcept("fireStationNumber", "address");
-			break;
-		case 3:
-			filter = SimpleBeanPropertyFilter.serializeAllExcept("fireStationNumber", "firstName");
+			filter = SimpleBeanPropertyFilter.serializeAllExcept("fireStationNumber");
 			break;
 		default:
 			filter = SimpleBeanPropertyFilter.serializeAll();

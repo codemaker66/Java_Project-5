@@ -5,11 +5,11 @@ import java.util.List;
 import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.MedicalRecord;
 
-public class MedicalRecordDaoImpl implements MedicalRecordDao {
+public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
 
 	@Override
 	public List<MedicalRecord> retrieveAllMedicalRecordsFromTheList() {
-		return Data.medicalRecords;
+		return medicalRecords;
 	}
 
 	@Override
@@ -17,16 +17,16 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
 		boolean check = true;
 
-		for (int i = 0; i < Data.medicalRecords.size(); i++) {
-			if (Data.medicalRecords.get(i).getFirstName().equals(medicalRecord.getFirstName())
-					&& Data.medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
+		for (int i = 0; i < medicalRecords.size(); i++) {
+			if (medicalRecords.get(i).getFirstName().equals(medicalRecord.getFirstName())
+					&& medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
 				check = false;
 				break;
 			}
 		}
 
-		if (check == true) {
-			Data.medicalRecords.add(medicalRecord);
+		if (check) {
+			medicalRecords.add(medicalRecord);
 			return check;
 		}
 
@@ -39,12 +39,12 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
 		boolean check = false;
 
-		for (int i = 0; i < Data.medicalRecords.size(); i++) {
-			if (Data.medicalRecords.get(i).getFirstName().equals(medicalRecord.getFirstName())
-					&& Data.medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
-				Data.medicalRecords.get(i).setBirthdate(medicalRecord.getBirthdate());
-				Data.medicalRecords.get(i).setMedications(medicalRecord.getMedications());
-				Data.medicalRecords.get(i).setAllergies(medicalRecord.getAllergies());
+		for (int i = 0; i < medicalRecords.size(); i++) {
+			if (medicalRecords.get(i).getFirstName().equals(medicalRecord.getFirstName())
+					&& medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
+				medicalRecords.get(i).setBirthdate(medicalRecord.getBirthdate());
+				medicalRecords.get(i).setMedications(medicalRecord.getMedications());
+				medicalRecords.get(i).setAllergies(medicalRecord.getAllergies());
 				check = true;
 				break;
 			}
@@ -59,10 +59,10 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
 		boolean check = false;
 
-		for (int i = 0; i < Data.medicalRecords.size(); i++) {
-			if (Data.medicalRecords.get(i).getFirstName().equals(firstName)
-					&& Data.medicalRecords.get(i).getLastName().equals(lastName)) {
-				Data.medicalRecords.remove(i);
+		for (int i = 0; i < medicalRecords.size(); i++) {
+			if (medicalRecords.get(i).getFirstName().equals(firstName)
+					&& medicalRecords.get(i).getLastName().equals(lastName)) {
+				medicalRecords.remove(i);
 				check = true;
 				break;
 			}

@@ -1,15 +1,12 @@
 package com.safetynet.alerts.model;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
 public class FireStation {
-	@NotNull(message = "address can not be null")
-	@Length(min = 10, message = "address must have at least ten characters")
+	@Length(min = 5, message = "address must have at least five characters")
 	private String address;
-	@NotNull(message = "station can not be null")
 	@Min(value = 1, message = "station must be at least one number")
 	private int station;
 

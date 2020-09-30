@@ -2,30 +2,24 @@ package com.safetynet.alerts.model;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
 public class Person {
-	@NotNull(message = "firstName can not be empty")
 	@Length(min = 1, message = "firstName must have at least one character")
 	private String firstName;
-	@NotNull(message = "lastName can not be empty")
 	@Length(min = 1, message = "lastName must have at least one character")
 	private String lastName;
-	@NotNull(message = "address can not be empty")
-	@Length(min = 10, message = "address must have at least ten characters")
+	@Length(min = 5, message = "address must have at least five characters")
 	private String address;
-	@NotNull(message = "city can not be empty")
 	@Length(min = 2, message = "city must have at least two characters")
 	private String city;
-	@NotNull(message = "zip can not be empty")
 	@Min(value = 1, message = "zip must be at least one number")
 	private int zip;
-	@NotNull(message = "phone can not be empty")
-	@Length(max = 10, message = "phone must have ten characters only")
+	@Pattern(regexp = "^.*([0-9]{3})-([0-9]{3})-([0-9]{4})", message = "phone number must be created like this format : 012-345-6789")
 	private String phone;
-	@NotNull(message = "email can not be empty")
+	@Pattern(regexp = "\\A(?!\\s*\\Z).+", message = "email field can not be empty")
 	@Email(message = "email must be a valid email")
 	private String email;
 

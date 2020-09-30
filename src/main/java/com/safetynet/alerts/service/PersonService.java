@@ -7,9 +7,9 @@ import com.safetynet.alerts.model.Person;
 
 public class PersonService {
 
-	public List<Person> getAllPersons() {
+	private PersonDaoImpl personDaoImpl = new PersonDaoImpl();
 
-		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
+	public List<Person> getAllPersons() {
 
 		return personDaoImpl.retrieveAllPersonsFromTheList();
 
@@ -17,38 +17,37 @@ public class PersonService {
 
 	public boolean addAPerson(Person person) {
 
-		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
+		boolean check = false;
 
 		if (personDaoImpl.addAPersonToTheList(person)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 
 	public boolean updateAPerson(Person person) {
 
-		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
+		boolean check = false;
 
 		if (personDaoImpl.updateAPersonInTheList(person)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 
 	public boolean deleteAPerson(String firstName, String lastName) {
 
-		PersonDaoImpl personDaoImpl = new PersonDaoImpl();
+		boolean check = false;
 
 		if (personDaoImpl.deleteAPersonFromTheList(firstName, lastName)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
 
+		return check;
 	}
 
 }

@@ -7,9 +7,9 @@ import com.safetynet.alerts.model.MedicalRecord;
 
 public class MedicalRecordService {
 
-	public List<MedicalRecord> getAllMedicalRecords() {
+	private MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
 
-		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
+	public List<MedicalRecord> getAllMedicalRecords() {
 
 		return medicalRecordDaoImpl.retrieveAllMedicalRecordsFromTheList();
 
@@ -17,37 +17,36 @@ public class MedicalRecordService {
 
 	public boolean addAMedicalRecord(MedicalRecord medicalRecord) {
 
-		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
+		boolean check = false;
 
 		if (medicalRecordDaoImpl.addAMedicalRecordToTheList(medicalRecord)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 
 	public boolean updateAMedicalRecord(MedicalRecord medicalRecord) {
 
-		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
+		boolean check = false;
 
 		if (medicalRecordDaoImpl.updateAMedicalRecordInTheList(medicalRecord)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
 
+		return check;
 	}
 
 	public boolean deleteAMedicalRecord(String firstName, String lastName) {
 
-		MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
+		boolean check = false;
 
 		if (medicalRecordDaoImpl.deleteAMedicalRecordFromTheList(firstName, lastName)) {
-			return true;
-		} else {
-			return false;
+			check = true;
 		}
+
+		return check;
 
 	}
 

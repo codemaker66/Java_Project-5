@@ -2,15 +2,11 @@ package com.safetynet.alerts.model;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Length;
 
 public class MedicalRecord {
-	@NotNull(message = "firstName can not be null")
 	@Length(min = 1, message = "firstName can not be less than 1 character")
 	private String firstName;
-	@NotNull(message = "lastName can not be null")
 	@Length(min = 1, message = "lastName can not be less than 1 character")
 	private String lastName;
 	private String birthdate;

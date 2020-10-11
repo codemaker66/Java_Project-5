@@ -9,12 +9,23 @@ public class FireStationService {
 
 	private FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
 
+	/**
+	 * This method call the fireStationDaoImpl to retrieve all fire stations from the list.
+	 * 
+	 * @return a list that contain all the fire stations.
+	 */
 	public List<FireStation> getAllFireStations() {
 
 		return fireStationDaoImpl.retrieveAllFireStationsFromTheList();
 
 	}
 
+	/**
+	 * This method call the fireStationDaoImpl to add a fire station to the list.
+	 * 
+	 * @param fireStationis is an object of type FireStation that contain the data of a fire station.
+	 * @return true if the fire station was added to the list.
+	 */
 	public boolean addAFireStation(FireStation fireStation) {
 
 		boolean check = false;
@@ -27,6 +38,12 @@ public class FireStationService {
 
 	}
 
+	/**
+	 * This method call the fireStationDaoImpl to update a fire station in the list.
+	 * 
+	 * @param fireStation is an object of type FireStation that contain the data of a fire station.
+	 * @return true if the fire station was updated in the list.
+	 */
 	public boolean updateAFireStation(FireStation fireStation) {
 
 		boolean check = false;
@@ -39,6 +56,13 @@ public class FireStationService {
 
 	}
 
+	/**
+	 * This method call the fireStationDaoImpl to delete a fire station from the list.
+	 * 
+	 * @param station represent the station number of a fire station.
+	 * @param address represent the address of a fire station.
+	 * @return true if the fire station was deleted from the list.
+	 */
 	public boolean deleteAFireStation(int station, String address) {
 
 		boolean check = false;

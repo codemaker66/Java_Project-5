@@ -11,40 +11,55 @@ import java.util.Locale;
 
 public class Util {
 
+	/**
+	 * This method convert string to date then check for it validity.
+	 * 
+	 * @param dateStr represent the date in string format.
+	 * @return true if the date is valid.
+	 */
 	public boolean isValid(String dateStr) {
 
-		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+		DateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
 		Date currentDate = new Date();
 		Date enteredDate = null;
-		boolean valid = true;
+		boolean validity = true;
 
 		try {
-			enteredDate = sdf.parse(dateStr);
+			enteredDate = simpleDateFormat.parse(dateStr);
 		} catch (ParseException e) {
 			return false;
 		}
 
 		if (enteredDate.after(currentDate)) {
-			valid = false;
+			validity = false;
 		}
 
-		return valid;
+		return validity;
 
 	}
 
+	/**
+	 * This method convert the date in string format to local date.
+	 * 
+	 * @param birthdate represent the date in string format.
+	 * @return the period between the date passed to the method and the actual date.
+	 */
 	public int toLocalDate(String birthdate) {
 
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
 		Date date = null;
-		LocalDate local = null;
+		LocalDate localDate = null;
+		
 		try {
 			date = format.parse(birthdate);
-			local = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
 		LocalDate now = LocalDate.now();
-		return Period.between(local, now).getYears();
+		
+		return Period.between(localDate, now).getYears();
 
 	}
 

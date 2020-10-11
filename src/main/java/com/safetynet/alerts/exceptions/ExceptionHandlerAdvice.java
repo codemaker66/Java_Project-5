@@ -1,7 +1,5 @@
 package com.safetynet.alerts.exceptions;
 
-import java.util.List;
-
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,13 +57,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(PropertiesException.class)
 	public ResponseEntity<Object> handlePropertiesException(PropertiesException e) {
-		return response(e.getHttpStatus(), e.getMessage(), e.getDetails());
-	}
-
-	private ResponseEntity<Object> response(HttpStatus httpStatus, String message, List<String> details) {
-		Errors e = new Errors();
-		e.setMessage(message);
-		e.setDetails(details);
-		return ResponseEntity.status(httpStatus).body(e);
+		Errors errors = new Errors();
+		errors.setMessage(e.getMessage());
+		errors.setDetails(e.getDetails());
+		return ResponseEntity.status(e.getHttpStatus()).body(errors);
 	}
 }

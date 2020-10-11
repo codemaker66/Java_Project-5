@@ -9,6 +9,13 @@ import com.safetynet.alerts.model.Output;
 
 public class Filter {
 
+	/**
+	 * This method filter the json data passed to it.
+	 * 
+	 * @param list is the list containing the output data.
+	 * @param option represent which filter option to use.
+	 * @return a MappingJacksonValue containing the filtered output data.
+	 */
 	public MappingJacksonValue jsonFilter(Output list, int option) {
 
 		Output data = list;

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonFilter("DynamicFilter")
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Output extends ResponseFormat {
+public class Output {
 
 	private String firstName;
 	private String lastName;
@@ -21,6 +21,14 @@ public class Output extends ResponseFormat {
 	private List<Output> famillyMembers;
 	private List<String> medications;
 	private List<String> allergies;
+	private String fireStation;
+	private List<Output> persons;
+	private List<List<Output>> personsGroupedByAddress;
+	private List<Output> children;
+	private List<Output> phoneNumbers;
+	private List<Output> emails;
+	private int childrenCount;
+	private int adultsCount;
 
 	public String getFirstName() {
 		return firstName;
@@ -116,6 +124,70 @@ public class Output extends ResponseFormat {
 
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
+	}
+
+	public String getFireStation() {
+		return fireStation;
+	}
+
+	public void setFireStation(String fireStation) {
+		this.fireStation = fireStation;
+	}
+
+	public List<Output> getPersons() {
+		return persons;
+	}
+
+	public void setPersons(List<Output> persons) {
+		this.persons = persons;
+	}
+
+	public List<List<Output>> getPersonsGroupedByAddress() {
+		return personsGroupedByAddress;
+	}
+
+	public void setPersonsGroupedByAddress(List<List<Output>> personsGroupedByAddress) {
+		this.personsGroupedByAddress = personsGroupedByAddress;
+	}
+
+	public List<Output> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Output> children) {
+		this.children = children;
+	}
+
+	public List<Output> getPhoneNumbers() {
+		return phoneNumbers;
+	}
+
+	public void setPhoneNumbers(List<Output> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
+	}
+
+	public List<Output> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(List<Output> emails) {
+		this.emails = emails;
+	}
+
+	public int getChildrenCount() {
+		return childrenCount;
+	}
+
+	public void setChildrenCount(int childrenCount) {
+		this.childrenCount = childrenCount;
+	}
+
+	public int getAdultsCount() {
+		return adultsCount;
+	}
+
+	public void setAdultsCount(int adultsCount) {
+		this.adultsCount = adultsCount;
 	}
 
 }

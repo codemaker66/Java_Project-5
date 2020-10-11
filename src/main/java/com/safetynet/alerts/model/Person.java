@@ -17,9 +17,9 @@ public class Person {
 	private String city;
 	@Min(value = 1, message = "zip must be at least one number")
 	private int zip;
-	@Pattern(regexp = "^.*([0-9]{3})-([0-9]{3})-([0-9]{4})", message = "phone number must be created like this format : 012-345-6789")
+	@Pattern(regexp = "^.*([0-9]{3})-([0-9]{3})-([0-9]{4})", message = "phone must be created with the following pattern : 012-345-6789")
 	private String phone;
-	@Pattern(regexp = "\\A(?!\\s*\\Z).+", message = "email field can not be empty")
+	@Pattern(regexp = "\\A(?!\\s*\\Z).+", message = "email field cannot be empty")
 	@Email(message = "email must be a valid email")
 	private String email;
 

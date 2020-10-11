@@ -2,25 +2,27 @@ package com.safetynet.alerts.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.safetynet.alerts.data.Data;
+import com.safetynet.alerts.data.DataManagement;
 import com.safetynet.alerts.model.Output;
 
 public class OutputDaoImpl implements OutputDao {
+	
+	private DataManagement dataManagement = new DataManagement();
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrievePersonsByFireStationNumber(int)
+	 */
 	@Override
-	public List<Output> retrievePersonsByFireStationNumber(int fireStationNumber) {
+	public List<Output> retrievePersonsByFireStationNumber(int stationNumber) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
+		List<Output> dataList = dataManagement.load();
 
 		List<Output> persons = new ArrayList<>();
 
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {
-			if (dataList.get(i).getFireStationNumber() == fireStationNumber) {
+			if (dataList.get(i).getFireStationNumber() == stationNumber) {
 				persons.add(dataList.get(i));
 			}
 
@@ -42,12 +44,13 @@ public class OutputDaoImpl implements OutputDao {
 		return list;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrieveChildrenByAddress(String)
+	 */
 	@Override
-	public List<Output> retrieveChildrensByAddress(String address) {
+	public List<Output> retrieveChildrenByAddress(String address) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
+		List<Output> dataList = dataManagement.load();
 		List<Output> persons = new ArrayList<>();
 		List<Output> list = new ArrayList<>();
 		List<Output> famillyMembers;
@@ -73,7 +76,7 @@ public class OutputDaoImpl implements OutputDao {
 			famillyMembers = new ArrayList<>();
 			for (int j = 0; j < persons.size(); j++) {
 				if (list.get(i).getLastName().equals(persons.get(j).getLastName())
-						&& !list.get(i).getFirstName().equals(persons.get(j).getFirstName())) {
+					&& !list.get(i).getFirstName().equals(persons.get(j).getFirstName())) {
 
 					Output output = new Output();
 					output.setFirstName(persons.get(j).getFirstName());
@@ -89,16 +92,16 @@ public class OutputDaoImpl implements OutputDao {
 		return list;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrievePhoneNumbersByFireStationNumber(int)
+	 */
 	@Override
 	public List<Output> retrievePhoneNumbersByFireStationNumber(int firestation) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
+		List<Output> dataList = dataManagement.load();
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {
-
 			if (dataList.get(i).getFireStationNumber() == firestation) {
 				Output output = new Output();
 				output.setPhone(dataList.get(i).getPhone());
@@ -110,12 +113,13 @@ public class OutputDaoImpl implements OutputDao {
 		return list;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrievePersonsByAddress(String)
+	 */
 	@Override
 	public List<Output> retrievePersonsByAddress(String address) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
+		List<Output> dataList = dataManagement.load();
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {
@@ -137,12 +141,13 @@ public class OutputDaoImpl implements OutputDao {
 		return list;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrievePersonsByFireStationNumbers(List)
+	 */
 	@Override
 	public List<Output> retrievePersonsByFireStationNumbers(List<Integer> stations) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
+		List<Output> dataList = dataManagement.load();
 
 		List<Output> list = new ArrayList<>();
 
@@ -168,19 +173,19 @@ public class OutputDaoImpl implements OutputDao {
 		return list;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrievePersonByFirstAndLastName(String, String)
+	 */
 	@Override
 	public List<Output> retrievePersonByFirstAndLastName(String firstName, String lastName) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
+		List<Output> dataList = dataManagement.load();
 
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {
 			if (dataList.get(i).getFirstName().equals(firstName) && dataList.get(i).getLastName().equals(lastName)
-					|| !dataList.get(i).getFirstName().equals(firstName)
-							&& dataList.get(i).getLastName().equals(lastName)) {
+				|| !dataList.get(i).getFirstName().equals(firstName) && dataList.get(i).getLastName().equals(lastName)) {
 				Output output = new Output();
 
 				output.setLastName(dataList.get(i).getLastName());
@@ -197,13 +202,13 @@ public class OutputDaoImpl implements OutputDao {
 		return list;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.OutputDao#retrieveEmailsByCity(String city)
+	 */
 	@Override
 	public List<Output> retrieveEmailsByCity(String city) {
 
-		Data data = new Data();
-
-		List<Output> dataList = data.load();
-
+		List<Output> dataList = dataManagement.load();
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {

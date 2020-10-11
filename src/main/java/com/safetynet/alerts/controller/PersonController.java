@@ -27,6 +27,11 @@ public class PersonController {
 
 	private PersonService personService = new PersonService();
 
+	/**
+	 * This method call the personService to get all the persons.
+	 * 
+	 * @return a list that contain all the persons.
+	 */
 	@GetMapping(value = "/persons")
 	public List<Person> get() {
 
@@ -34,6 +39,13 @@ public class PersonController {
 
 	}
 
+	/**
+	 * This method call the personService to add a person.
+	 * 
+	 * @param person is an object of type Person that contain the data of a person.
+	 * @param bindingResult general interface that represents binding results.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@PostMapping(value = "/person")
 	public ResponseEntity<String> post(@Valid @RequestBody Person person, BindingResult bindingResult) {
 
@@ -48,12 +60,18 @@ public class PersonController {
 		if (personService.addAPerson(person)) {
 			return ResponseEntity.status(HttpStatus.CREATED).body("The person was added to the list");
 		} else {
-			throw new ResourceException(HttpStatus.BAD_REQUEST,
-					"A person with the same first and lastname already exist");
+			throw new ResourceException(HttpStatus.BAD_REQUEST, "A person with the same first and lastname already exist");
 		}
 
 	}
 
+	/**
+	 * This method call the personService to update a person.
+	 * 
+	 * @param person is an object of type Person that contain the data of a person.
+	 * @param bindingResult general interface that represents binding results.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@PutMapping(value = "/person")
 	public ResponseEntity<String> put(@Valid @RequestBody Person person, BindingResult bindingResult) {
 
@@ -73,6 +91,13 @@ public class PersonController {
 
 	}
 
+	/**
+	 * This method call the personService to delete a person.
+	 * 
+	 * @param firstName represent the first name of a person.
+	 * @param lastName  represent the last name of a person.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@DeleteMapping(value = "/person")
 	public ResponseEntity<String> delete(@RequestParam(name = "firstName") String firstName,
 			@RequestParam(name = "lastName") String lastName) {

@@ -28,6 +28,11 @@ public class MedicalRecordController {
 
 	private MedicalRecordService medicalRecordService = new MedicalRecordService();
 
+	/**
+	 * This method call the medicalRecordService to get all the medical records.
+	 * 
+	 * @return a list that contain all the medical records.
+	 */
 	@GetMapping(value = "/medicalRecords")
 	public List<MedicalRecord> get() {
 
@@ -35,6 +40,13 @@ public class MedicalRecordController {
 
 	}
 
+	/**
+	 * This method call the medicalRecordService to add a medical record.
+	 * 
+	 * @param medicalRecord is an object of type MedicalRecord that contain the data of a medical record.
+	 * @param bindingResult general interface that represents binding results.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@PostMapping(value = "/medicalRecord")
 	public ResponseEntity<String> post(@Valid @RequestBody MedicalRecord medicalRecord, BindingResult bindingResult) {
 
@@ -61,6 +73,13 @@ public class MedicalRecordController {
 		}
 	}
 
+	/**
+	 * This method call the medicalRecordService to update a medical record.
+	 * 
+	 * @param medicalRecord is an object of type MedicalRecord that contain the data of a medical record.
+	 * @param bindingResult general interface that represents binding results.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@PutMapping(value = "/medicalRecord")
 	public ResponseEntity<String> put(@Valid @RequestBody MedicalRecord medicalRecord, BindingResult bindingResult) {
 
@@ -75,7 +94,8 @@ public class MedicalRecordController {
 		Util util = new Util();
 
 		if (!util.isValid(medicalRecord.getBirthdate())) {
-			throw new ResourceException(HttpStatus.BAD_REQUEST, "The date provided is null or not valid");
+			throw new ResourceException(HttpStatus.BAD_REQUEST,
+					"The date provided is null or not valid, must be of format : \"dd/MM/yyyy\"");
 		}
 
 		if (medicalRecordService.updateAMedicalRecord(medicalRecord)) {
@@ -86,6 +106,13 @@ public class MedicalRecordController {
 
 	}
 
+	/**
+	 * This method call the medicalRecordService to delete a medical record.
+	 * 
+	 * @param firstName represent the first name of a person.
+	 * @param lastName  represent the last name of a person.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@DeleteMapping(value = "/medicalRecord")
 	public ResponseEntity<String> delete(@RequestParam(name = "firstName") String firstName,
 			@RequestParam(name = "lastName") String lastName) {
@@ -94,7 +121,7 @@ public class MedicalRecordController {
 			return ResponseEntity.status(HttpStatus.OK).body("The medicalrecord was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					"There are no medicalrecord with the firstname : "
+					"There are no medicalrecord for a person with the firstname : "
 							+ (firstName.isEmpty() ? "\"null value\"" : firstName) + " and the lastname : "
 							+ (lastName.isEmpty() ? "\"null value\"" : lastName) + " in the list");
 		}

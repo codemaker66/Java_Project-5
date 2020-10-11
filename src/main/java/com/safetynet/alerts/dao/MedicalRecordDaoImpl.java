@@ -5,13 +5,21 @@ import java.util.List;
 import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.MedicalRecord;
 
-public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
+public class MedicalRecordDaoImpl implements MedicalRecordDao {
+	
+	private List<MedicalRecord> medicalRecords = Data.instance().getMedicalRecords();
 
+	/**
+	 * @see com.safetynet.alerts.dao.MedicalRecordDao#retrieveAllMedicalRecordsFromTheList()
+	 */
 	@Override
 	public List<MedicalRecord> retrieveAllMedicalRecordsFromTheList() {
 		return medicalRecords;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.MedicalRecordDao#addAMedicalRecordToTheList(MedicalRecord)
+	 */
 	@Override
 	public boolean addAMedicalRecordToTheList(MedicalRecord medicalRecord) {
 
@@ -19,7 +27,7 @@ public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
 
 		for (int i = 0; i < medicalRecords.size(); i++) {
 			if (medicalRecords.get(i).getFirstName().equals(medicalRecord.getFirstName())
-					&& medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
+				&& medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
 				check = false;
 				break;
 			}
@@ -34,6 +42,9 @@ public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
 
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.MedicalRecordDao#updateAMedicalRecordInTheList(MedicalRecord)
+	 */
 	@Override
 	public boolean updateAMedicalRecordInTheList(MedicalRecord medicalRecord) {
 
@@ -41,7 +52,7 @@ public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
 
 		for (int i = 0; i < medicalRecords.size(); i++) {
 			if (medicalRecords.get(i).getFirstName().equals(medicalRecord.getFirstName())
-					&& medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
+				&& medicalRecords.get(i).getLastName().equals(medicalRecord.getLastName())) {
 				medicalRecords.get(i).setBirthdate(medicalRecord.getBirthdate());
 				medicalRecords.get(i).setMedications(medicalRecord.getMedications());
 				medicalRecords.get(i).setAllergies(medicalRecord.getAllergies());
@@ -54,6 +65,9 @@ public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
 
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.MedicalRecordDao#deleteAMedicalRecordFromTheList(String, String)
+	 */
 	@Override
 	public boolean deleteAMedicalRecordFromTheList(String firstName, String lastName) {
 
@@ -61,7 +75,7 @@ public class MedicalRecordDaoImpl extends Data implements MedicalRecordDao {
 
 		for (int i = 0; i < medicalRecords.size(); i++) {
 			if (medicalRecords.get(i).getFirstName().equals(firstName)
-					&& medicalRecords.get(i).getLastName().equals(lastName)) {
+				&& medicalRecords.get(i).getLastName().equals(lastName)) {
 				medicalRecords.remove(i);
 				check = true;
 				break;

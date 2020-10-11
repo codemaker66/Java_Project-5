@@ -5,13 +5,21 @@ import java.util.List;
 import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.FireStation;
 
-public class FireStationDaoImpl extends Data implements FireStationDao {
+public class FireStationDaoImpl implements FireStationDao {
+	
+	private List<FireStation> fireStations = Data.instance().getFireStations();
 
+	/**
+	 * @see com.safetynet.alerts.dao.FireStationDao#retrieveAllFireStationsFromTheList()
+	 */
 	@Override
 	public List<FireStation> retrieveAllFireStationsFromTheList() {
 		return fireStations;
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.FireStationDao#addAFireStationToTheList(FireStation)
+	 */
 	@Override
 	public boolean addAFireStationToTheList(FireStation fireStation) {
 
@@ -33,6 +41,9 @@ public class FireStationDaoImpl extends Data implements FireStationDao {
 
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.FireStationDao#updateAFireStationInTheList(FireStation)
+	 */
 	@Override
 	public boolean updateAFireStationInTheList(FireStation fireStation) {
 
@@ -50,6 +61,9 @@ public class FireStationDaoImpl extends Data implements FireStationDao {
 
 	}
 
+	/**
+	 * @see com.safetynet.alerts.dao.FireStationDao#deleteAFireStationFromTheList(int, String)
+	 */
 	@Override
 	public boolean deleteAFireStationFromTheList(int station, String address) {
 

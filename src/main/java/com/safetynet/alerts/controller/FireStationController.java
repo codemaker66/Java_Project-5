@@ -27,12 +27,24 @@ public class FireStationController {
 
 	private FireStationService fireStationService = new FireStationService();
 
+	/**
+	 * This method call the fireStationService to get all the fire stations.
+	 * 
+	 * @return a list that contain all the fire stations.
+	 */
 	@GetMapping(value = "/firestations")
 	public List<FireStation> get() {
 
 		return fireStationService.getAllFireStations();
 	}
 
+	/**
+	 * This method call the fireStationService to add a fire station.
+	 * 
+	 * @param fireStation is an object of type FireStation that contain the data of a fire station.
+	 * @param bindingResult general interface that represents binding results.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@PostMapping(value = "/firestation")
 	public ResponseEntity<String> post(@Valid @RequestBody FireStation fireStation, BindingResult bindingResult) {
 
@@ -52,6 +64,13 @@ public class FireStationController {
 
 	}
 
+	/**
+	 * This method call the fireStationService to update a fire station.
+	 * 
+	 * @param fireStation is an object of type FireStation that contain the data of a fire station.
+	 * @param bindingResult general interface that represents binding results.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@PutMapping(value = "/firestation")
 	public ResponseEntity<String> put(@Valid @RequestBody FireStation fireStation, BindingResult bindingResult) {
 
@@ -71,6 +90,13 @@ public class FireStationController {
 
 	}
 
+	/**
+	 * This method call the fireStationService to delete a fire station.
+	 * 
+	 * @param station represent the station number of a fire station.
+	 * @param address represent the address of a fire station.
+	 * @return a ResponseEntity if the request was successful.
+	 */
 	@DeleteMapping(value = "/firestation")
 	public ResponseEntity<String> delete(@RequestParam(name = "station") int station,
 			@RequestParam(name = "address") String address) {

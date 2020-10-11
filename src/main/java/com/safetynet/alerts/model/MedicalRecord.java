@@ -5,9 +5,9 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 
 public class MedicalRecord {
-	@Length(min = 1, message = "firstName can not be less than 1 character")
+	@Length(min = 1, message = "firstName must have at least one character")
 	private String firstName;
-	@Length(min = 1, message = "lastName can not be less than 1 character")
+	@Length(min = 1, message = "lastName must have at least one character")
 	private String lastName;
 	private String birthdate;
 	private List<String> medications;

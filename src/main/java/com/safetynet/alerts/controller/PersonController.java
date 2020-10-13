@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,7 @@ import com.safetynet.alerts.service.PersonService;
 public class PersonController {
 
 	private PersonService personService = new PersonService();
+	private static final Logger logger = LogManager.getLogger(PersonController.class);
 
 	/**
 	 * This method call the personService to get all the persons.
@@ -34,6 +37,10 @@ public class PersonController {
 	 */
 	@GetMapping(value = "/persons")
 	public List<Person> get() {
+		
+		logger.info("The user requested the url : /persons with the GET method");
+		
+		logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 
 		return personService.getAllPersons();
 
@@ -48,6 +55,8 @@ public class PersonController {
 	 */
 	@PostMapping(value = "/person")
 	public ResponseEntity<String> post(@Valid @RequestBody Person person, BindingResult bindingResult) {
+		
+		logger.info("The user requested the url : /person with the POST method");
 
 		if (bindingResult.hasErrors()) {
 			List<String> details = new ArrayList<>();
@@ -58,6 +67,7 @@ public class PersonController {
 		}
 
 		if (personService.addAPerson(person)) {
+			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The person was added to the list");
 			return ResponseEntity.status(HttpStatus.CREATED).body("The person was added to the list");
 		} else {
 			throw new ResourceException(HttpStatus.BAD_REQUEST, "A person with the same first and lastname already exist");
@@ -74,6 +84,8 @@ public class PersonController {
 	 */
 	@PutMapping(value = "/person")
 	public ResponseEntity<String> put(@Valid @RequestBody Person person, BindingResult bindingResult) {
+		
+		logger.info("The user requested the url : /person with the PUT method");
 
 		if (bindingResult.hasErrors()) {
 			List<String> details = new ArrayList<>();
@@ -84,6 +96,7 @@ public class PersonController {
 		}
 
 		if (personService.updateAPerson(person)) {
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The person was updated in the list");
 			return ResponseEntity.status(HttpStatus.OK).body("The person was updated in the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND, "This person does not exist in the list");
@@ -101,8 +114,11 @@ public class PersonController {
 	@DeleteMapping(value = "/person")
 	public ResponseEntity<String> delete(@RequestParam(name = "firstName") String firstName,
 			@RequestParam(name = "lastName") String lastName) {
+		
+		logger.info("The user requested the url : /person with the DELETE method");
 
 		if (personService.deleteAPerson(firstName, lastName)) {
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The person was deleted from the list");
 			return ResponseEntity.status(HttpStatus.OK).body("The person was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,

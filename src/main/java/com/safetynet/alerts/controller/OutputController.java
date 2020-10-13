@@ -2,6 +2,8 @@ package com.safetynet.alerts.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import com.safetynet.alerts.service.OutputService;
 public class OutputController {
 
 	private OutputService outputService = new OutputService();
+	private static final Logger logger = LogManager.getLogger(OutputController.class);
 
 	/**
 	 * This method call the outputService to find persons by fire station number.
@@ -25,6 +28,8 @@ public class OutputController {
 	 */
 	@GetMapping(value = "/firestation")
 	public MappingJacksonValue getPersonsByFireStationNumber(@RequestParam(name = "stationNumber") int stationNumber) {
+		
+		logger.info("The user requested the url : /firestation?stationNumber=" + stationNumber +  " with the GET method");
 
 		Output output = outputService.findPersonsByFireStationNumber(stationNumber);
 
@@ -32,6 +37,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 1);
 
 		} else {
@@ -48,6 +54,8 @@ public class OutputController {
 	 */
 	@GetMapping(value = "/childAlert")
 	public MappingJacksonValue getChildrenByAddress(@RequestParam(name = "address") String address) {
+		
+		logger.info("The user requested the url : /childAlert?address=" + address +  " with the GET method");
 
 		Output output = outputService.findChildrenByAddress(address);
 
@@ -55,6 +63,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 0);
 
 		} else {
@@ -72,6 +81,8 @@ public class OutputController {
 	 */
 	@GetMapping(value = "/phoneAlert")
 	public MappingJacksonValue getPhoneNumbersByFireStationNumber(@RequestParam(name = "firestation") int firestation) {
+		
+		logger.info("The user requested the url : /phoneAlert?firestation=" + firestation +  " with the GET method");
 
 		Output output = outputService.findPhoneNumbersByFireStationNumber(firestation);
 
@@ -79,6 +90,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 0);
 
 		} else {
@@ -95,6 +107,8 @@ public class OutputController {
 	 */
 	@GetMapping(value = "/fire")
 	public MappingJacksonValue getPersonsByAddress(@RequestParam(name = "address") String address) {
+		
+		logger.info("The user requested the url : /fire?address=" + address +  " with the GET method");
 
 		Output output = outputService.findPersonsByAddress(address);
 
@@ -102,6 +116,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 2);
 
 		} else {
@@ -119,6 +134,8 @@ public class OutputController {
 	 */
 	@GetMapping(value = "/flood/stations")
 	public MappingJacksonValue getPersonsByFireStationNumbers(@RequestParam(name = "stations") List<Integer> stations) {
+		
+		logger.info("The user requested the url : /flood/stations?stations=" + stations +  " with the GET method");
 
 		Output output = outputService.findPersonsByFireStationNumbers(stations);
 
@@ -126,6 +143,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 2);
 
 		} else {
@@ -146,6 +164,8 @@ public class OutputController {
 	@GetMapping(value = "/personInfo")
 	public MappingJacksonValue getPersonByFirstAndLastName(@RequestParam(name = "firstName") String firstName,
 			@RequestParam(name = "lastName") String lastName) {
+		
+		logger.info("The user requested the url : /personInfo?firstName=" + firstName + "&lastName=" + lastName +  " with the GET method");
 
 		Output output = outputService.findPersonByFirstAndLastName(firstName, lastName);
 
@@ -153,6 +173,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 0);
 
 		} else {
@@ -172,6 +193,8 @@ public class OutputController {
 	 */
 	@GetMapping(value = "/communityEmail")
 	public MappingJacksonValue getEmailsByCity(@RequestParam(name = "city") String city) {
+		
+		logger.info("The user requested the url : /communityEmail?city=" + city + " with the GET method");
 
 		Output output = outputService.findEmailsByCity(city);
 
@@ -179,6 +202,7 @@ public class OutputController {
 
 			Filter filter = new Filter();
 
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 			return filter.jsonFilter(output, 0);
 
 		} else {

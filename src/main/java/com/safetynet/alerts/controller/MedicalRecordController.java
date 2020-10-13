@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,7 @@ import com.safetynet.alerts.utils.Util;
 public class MedicalRecordController {
 
 	private MedicalRecordService medicalRecordService = new MedicalRecordService();
+	private static final Logger logger = LogManager.getLogger(MedicalRecordController.class);
 
 	/**
 	 * This method call the medicalRecordService to get all the medical records.
@@ -35,6 +38,10 @@ public class MedicalRecordController {
 	 */
 	@GetMapping(value = "/medicalRecords")
 	public List<MedicalRecord> get() {
+		
+		logger.info("The user requested the url : /medicalRecords with the GET method");
+		
+		logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
 
 		return medicalRecordService.getAllMedicalRecords();
 
@@ -49,13 +56,15 @@ public class MedicalRecordController {
 	 */
 	@PostMapping(value = "/medicalRecord")
 	public ResponseEntity<String> post(@Valid @RequestBody MedicalRecord medicalRecord, BindingResult bindingResult) {
+		
+		logger.info("The user requested the url : /medicalRecord with the POST method");
 
 		if (bindingResult.hasErrors()) {
 			List<String> details = new ArrayList<>();
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
 				details.add(fieldError.getDefaultMessage());
 			}
-			throw new PropertiesException(HttpStatus.BAD_REQUEST, "Validation failed", details);
+			throw new PropertiesException(HttpStatus.BAD_REQUEST, "validation failed", details);
 		}
 
 		Util util = new Util();
@@ -66,6 +75,7 @@ public class MedicalRecordController {
 		}
 
 		if (medicalRecordService.addAMedicalRecord(medicalRecord)) {
+			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The medicalrecord was added to the list");
 			return ResponseEntity.status(HttpStatus.CREATED).body("The medicalrecord was added to the list");
 		} else {
 			throw new ResourceException(HttpStatus.BAD_REQUEST,
@@ -82,6 +92,8 @@ public class MedicalRecordController {
 	 */
 	@PutMapping(value = "/medicalRecord")
 	public ResponseEntity<String> put(@Valid @RequestBody MedicalRecord medicalRecord, BindingResult bindingResult) {
+		
+		logger.info("The user requested the url : /medicalRecord with the PUT method");
 
 		if (bindingResult.hasErrors()) {
 			List<String> details = new ArrayList<>();
@@ -99,6 +111,7 @@ public class MedicalRecordController {
 		}
 
 		if (medicalRecordService.updateAMedicalRecord(medicalRecord)) {
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The medicalrecord was updated in the list");
 			return ResponseEntity.status(HttpStatus.OK).body("The medicalrecord was updated in the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND, "This medicalrecord does not exist in the list");
@@ -116,8 +129,11 @@ public class MedicalRecordController {
 	@DeleteMapping(value = "/medicalRecord")
 	public ResponseEntity<String> delete(@RequestParam(name = "firstName") String firstName,
 			@RequestParam(name = "lastName") String lastName) {
+		
+		logger.info("The user requested the url : /medicalRecord with the DELETE method");
 
 		if (medicalRecordService.deleteAMedicalRecord(firstName, lastName)) {
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The medicalrecord was deleted from the list");
 			return ResponseEntity.status(HttpStatus.OK).body("The medicalrecord was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,

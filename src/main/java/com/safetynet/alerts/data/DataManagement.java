@@ -90,7 +90,7 @@ public class DataManagement {
 
 			medications = new ArrayList<>();
 			allergies = new ArrayList<>();
-
+			
 			for (int l = 0; l < node.path("medications").size(); l++) {
 				medications.add(node.path("medications").get(l).asText());
 			}

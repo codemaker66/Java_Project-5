@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,8 @@ import com.safetynet.alerts.service.OutputService;
 @RestController
 public class OutputController {
 
-	private OutputService outputService = new OutputService();
+	@Autowired
+	private OutputService outputService;
 	private static final Logger logger = LogManager.getLogger(OutputController.class);
 
 	/**
@@ -178,8 +180,8 @@ public class OutputController {
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					"There are no person with the firstname : " + (firstName.isEmpty() ? "\"null value\"" : firstName)
-							+ " and the lastname " + (lastName.isEmpty() ? "\"null value\"" : lastName)
+					"There are no person with the first name : " + (firstName.isEmpty() ? "\"null value\"" : firstName)
+							+ " and the last name " + (lastName.isEmpty() ? "\"null value\"" : lastName)
 							+ " in the list");
 		}
 
@@ -207,7 +209,7 @@ public class OutputController {
 
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					city.isEmpty() ? "You didn't provide a city name" : "There are no emails for this city : " + city);
+					city.isEmpty() ? "You didn't provide a city name" : "There are no emails registered for this city : " + city);
 		}
 
 	}

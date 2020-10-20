@@ -1,10 +1,6 @@
 package com.safetynet.alerts.integration;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,189 +10,278 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.safetynet.alerts.controller.MedicalRecordController;
+import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.MedicalRecord;
 
-@WebMvcTest(MedicalRecordController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MedicalRecordControllerIT {
 
+	@LocalServerPort
+	private int port;
+
 	@Autowired
-	private MockMvc mockMvc;
+	private TestRestTemplate restTemplate = new TestRestTemplate();
 
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
+	private HttpHeaders headers = new HttpHeaders();
+
 	@Test
 	@Order(1)
-	void addAMedicalRecordToTheList() throws Exception {
+	void retrieveAllMedicalRecordsFromTheList() throws JsonProcessingException {
 
-		MedicalRecord medicalRecord = new MedicalRecord();
-		
-		List<String> medications = Arrays.asList("medication1", "medication2");
-		List<String> allergies = Arrays.asList("allergy1", "allergy2");
+		// Given
+		List<MedicalRecord> medicalRecords = Data.instance().getMedicalRecords();
 
-		medicalRecord.setFirstName("Jo");
-		medicalRecord.setLastName("Boyd");
-		medicalRecord.setBirthdate("01/02/1980");
-		medicalRecord.setMedications(medications);
-		medicalRecord.setAllergies(allergies);
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecords";
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
 
-		mockMvc.perform(
-				post("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isCreated()).andExpect(content().string("The medicalrecord was added to the list"));
+		// Then
+		String expected = objectMapper.writeValueAsString(medicalRecords);
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
 	}
-	
+
 	@Test
 	@Order(2)
-	void addTheSameMedicalRecordToTheList() throws Exception {
+	void addAMedicalRecordToTheList() {
 
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
-		
 		List<String> medications = Arrays.asList("medication1", "medication2");
 		List<String> allergies = Arrays.asList("allergy1", "allergy2");
-
 		medicalRecord.setFirstName("Jo");
 		medicalRecord.setLastName("Boyd");
 		medicalRecord.setBirthdate("01/02/1980");
 		medicalRecord.setMedications(medications);
 		medicalRecord.setAllergies(allergies);
 
-		mockMvc.perform(
-				post("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isBadRequest()).andExpect(content().string("A medicalrecord with the same first and lastname already exist"));
-		
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+
+		// Then
+		String expected = "The medicalrecord was added to the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
-	
+
 	@Test
 	@Order(3)
-	void forgetAPropertyWhenAddingAMedicalRecordToTheList() throws Exception {
+	void addTheSameMedicalRecordToTheList() {
 
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
+		List<String> medications = Arrays.asList("medication1", "medication2");
+		List<String> allergies = Arrays.asList("allergy1", "allergy2");
+		medicalRecord.setFirstName("Jo");
+		medicalRecord.setLastName("Boyd");
+		medicalRecord.setBirthdate("01/02/1980");
+		medicalRecord.setMedications(medications);
+		medicalRecord.setAllergies(allergies);
 
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+
+		// Then
+		String expected = "A medicalrecord with the same first and last name already exist";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+	}
+
+	@Test
+	@Order(4)
+	void forgetAPropertyWhenAddingAMedicalRecordToTheList() {
+
+		// Given
+		MedicalRecord medicalRecord = new MedicalRecord();
 		medicalRecord.setFirstName("");
 		medicalRecord.setLastName("Boyd");
 		medicalRecord.setBirthdate("01/02/1980");
 
-		mockMvc.perform(
-				post("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string("{\"message\":\"Validation failed\",\"details\":[\"firstName must have at least one character\"]}"));
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+
+		// Then
+		String expected = "{\"message\":\"validation failed\",\"details\":[\"firstName must have at least one character\"]}";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
 	}
-	
+
 	@Test
-	@Order(4)
-	void giveAWrongDateWhenAddingAMedicalRecordToTheList() throws Exception {
+	@Order(5)
+	void giveAWrongBirthDateWhenAddingAMedicalRecordToTheList() {
 
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
-
 		medicalRecord.setFirstName("Jo");
 		medicalRecord.setLastName("Boyd");
 		medicalRecord.setBirthdate("01/02/3000");
 
-		mockMvc.perform(
-				post("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string("The date provided is null or not valid, must be of format : \"dd/MM/yyyy\""));
-	}
-	
-	@Test
-	@Order(5)
-	void updateAMedicalRecordInTheList() throws Exception {
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
 
+		// Then
+		String expected = "The date provided is null or not valid, must be of format : \"dd/MM/yyyy\"";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+	}
+
+	@Test
+	@Order(6)
+	void updateAMedicalRecordInTheList() {
+
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
-		
 		List<String> medications = Arrays.asList("medication1");
 		List<String> allergies = Arrays.asList("allergy1");
-
 		medicalRecord.setFirstName("Jo");
 		medicalRecord.setLastName("Boyd");
 		medicalRecord.setBirthdate("01/07/1980");
 		medicalRecord.setMedications(medications);
 		medicalRecord.setAllergies(allergies);
 
-		mockMvc.perform(
-				put("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isOk()).andExpect(content().string("The medicalrecord was updated in the list"));
-		
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
+
+		// Then
+		String expected = "The medicalrecord was updated in the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
 	}
-	
+
 	@Test
-	@Order(6)
-	void updateAMedicalRecordThatCantBeFoundInTheList() throws Exception {
+	@Order(7)
+	void updateAMedicalRecordThatCantBeFoundInTheList() {
 
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
-
 		medicalRecord.setFirstName("Joe");
 		medicalRecord.setLastName("Boy");
 		medicalRecord.setBirthdate("01/07/1980");
 
-		mockMvc.perform(
-				put("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isNotFound()).andExpect(content().string("This medicalrecord does not exist in the list"));
-	}
-	
-	@Test
-	@Order(7)
-	void forgetAPropertyWhenUpdatingAMedicalRecordInTheList() throws Exception {
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
 
+		// Then
+		String expected = "This medicalrecord does not exist in the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+	}
+
+	@Test
+	@Order(8)
+	void forgetAPropertyWhenUpdatingAMedicalRecordInTheList() {
+
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
-		
 		List<String> medications = Arrays.asList("medication1");
 		List<String> allergies = Arrays.asList("allergy1");
-
 		medicalRecord.setFirstName("Jo");
 		medicalRecord.setLastName("");
 		medicalRecord.setBirthdate("01/07/1980");
 		medicalRecord.setMedications(medications);
 		medicalRecord.setAllergies(allergies);
 
-		mockMvc.perform(
-				put("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isBadRequest()).andExpect(content().string("{\"message\":\"Validation failed\",\"details\":[\"lastName must have at least one character\"]}"));
-	}
-	
-	@Test
-	@Order(8)
-	void giveAWrongDateWhenUpdatingAMedicalRecordToTheList() throws Exception {
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
 
+		// Then
+		String expected = "{\"message\":\"validation failed\",\"details\":[\"lastName must have at least one character\"]}";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+	}
+
+	@Test
+	@Order(9)
+	void giveAWrongBirthDateWhenUpdatingAMedicalRecordToTheList() {
+
+		// Given
 		MedicalRecord medicalRecord = new MedicalRecord();
-		
 		List<String> medications = Arrays.asList("medication1");
 		List<String> allergies = Arrays.asList("allergy1");
-
 		medicalRecord.setFirstName("Jo");
 		medicalRecord.setLastName("Boyd");
 		medicalRecord.setBirthdate("01/07/4000");
 		medicalRecord.setMedications(medications);
 		medicalRecord.setAllergies(allergies);
 
-		mockMvc.perform(
-				put("/medicalRecord").contentType("application/json").content(objectMapper.writeValueAsString(medicalRecord)))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string("The date provided is null or not valid, must be of format : \"dd/MM/yyyy\""));
-	}
-	
-	@Test
-	@Order(9)
-	void deleteAMedicalRecordFromTheList() throws Exception {
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord";
+		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
 
-		mockMvc.perform(
-				delete("/medicalRecord?firstName=Jo&lastName=Boyd"))
-				.andExpect(status().isOk()).andExpect(content().string("The medicalrecord was deleted from the list"));
+		// Then
+		String expected = "The date provided is null or not valid, must be of format : \"dd/MM/yyyy\"";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@Test
 	@Order(10)
-	void deleteAMedicalRecordThatDontExistInTheList() throws Exception {
+	void deleteAMedicalRecordFromTheList() {
 
-		mockMvc.perform(
-				delete("/medicalRecord?firstName=Joe&lastName=Boy"))
-				.andExpect(status().isNotFound()).andExpect(content().string("There are no medicalrecord for a person with the firstname : Joe and the lastname : Boy in the list"));
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord?firstName=Jo&lastName=Boyd";
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
+
+		// Then
+		String expected = "The medicalrecord was deleted from the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+	}
+
+	@Test
+	@Order(11)
+	void deleteAMedicalRecordThatCantBeFoundInTheList() {
+
+		// When
+		String URL = "http://localhost:" + port + "/medicalRecord?firstName=Joe&lastName=Boy";
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
+
+		// Then
+		String expected = "There are no medicalrecord for a person with the first name : Joe and the last name : Boy in the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
 	}
 
 }

@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Configurations {
 
+	/**
+	 * This method configure the httptrace actuator to be visible when called.
+	 * 
+	 * @return an interface of type HttpTraceRepository.
+	 */
 	@Bean
 	public HttpTraceRepository htttpTraceRepository() {
 		return new InMemoryHttpTraceRepository();

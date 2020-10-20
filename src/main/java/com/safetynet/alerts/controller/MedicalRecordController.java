@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,8 @@ import com.safetynet.alerts.utils.Util;
 @RestController
 public class MedicalRecordController {
 
-	private MedicalRecordService medicalRecordService = new MedicalRecordService();
+	@Autowired
+	private MedicalRecordService medicalRecordService;
 	private static final Logger logger = LogManager.getLogger(MedicalRecordController.class);
 
 	/**
@@ -79,7 +81,7 @@ public class MedicalRecordController {
 			return ResponseEntity.status(HttpStatus.CREATED).body("The medicalrecord was added to the list");
 		} else {
 			throw new ResourceException(HttpStatus.BAD_REQUEST,
-					"A medicalrecord with the same first and lastname already exist");
+					"A medicalrecord with the same first and last name already exist");
 		}
 	}
 
@@ -100,7 +102,7 @@ public class MedicalRecordController {
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
 				details.add(fieldError.getDefaultMessage());
 			}
-			throw new PropertiesException(HttpStatus.BAD_REQUEST, "Validation failed", details);
+			throw new PropertiesException(HttpStatus.BAD_REQUEST, "validation failed", details);
 		}
 
 		Util util = new Util();
@@ -137,8 +139,8 @@ public class MedicalRecordController {
 			return ResponseEntity.status(HttpStatus.OK).body("The medicalrecord was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					"There are no medicalrecord for a person with the firstname : "
-							+ (firstName.isEmpty() ? "\"null value\"" : firstName) + " and the lastname : "
+					"There are no medicalrecord for a person with the first name : "
+							+ (firstName.isEmpty() ? "\"null value\"" : firstName) + " and the last name : "
 							+ (lastName.isEmpty() ? "\"null value\"" : lastName) + " in the list");
 		}
 

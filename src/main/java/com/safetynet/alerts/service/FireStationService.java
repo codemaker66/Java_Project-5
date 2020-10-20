@@ -2,12 +2,19 @@ package com.safetynet.alerts.service;
 
 import java.util.List;
 
-import com.safetynet.alerts.dao.FireStationDaoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.safetynet.alerts.dao.FireStationDao;
 import com.safetynet.alerts.model.FireStation;
 
+@Service
 public class FireStationService {
 
-	private FireStationDaoImpl fireStationDaoImpl = new FireStationDaoImpl();
+	@Autowired
+	private FireStationDao fireStationDaoImpl;
+	private static final Logger logger = LogManager.getLogger(FireStationService.class);
 
 	/**
 	 * This method call the fireStationDaoImpl to retrieve all fire stations from the list.
@@ -34,6 +41,7 @@ public class FireStationService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}
@@ -52,6 +60,7 @@ public class FireStationService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}
@@ -71,6 +80,7 @@ public class FireStationService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}

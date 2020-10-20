@@ -21,6 +21,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 	
 	private static final Logger logger = LogManager.getLogger(ExceptionHandlerAdvice.class);
 
+	/**
+	 * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException, HttpHeaders, HttpStatus, WebRequest)
+	 */
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -28,6 +31,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(status).body("This request method is not allowed");
 	}
 
+	/**
+	 * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request)
+	 */
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
@@ -36,6 +42,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 				.body("The parameter : " + request.getParameterNames().next() + " is null or not valid");
 	}
 
+	/**
+	 * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request)
+	 */
 	@Override
 	protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -43,6 +52,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(status).body(ex.getMessage());
 	}
 
+	/**
+	 * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request)
+	 */
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
@@ -50,6 +62,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(status).body("This url is not valid");
 	}
 
+	/**
+	 * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request)
+	 */
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -57,12 +72,24 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(status).body("Malformed or empty json data");
 	}
 
+	/**
+	 * This method is called whenever there are a resource exception.
+	 * 
+	 * @param e is an object of type ResourceException.
+	 * @return a ResponseEntity containing the HttpStatus and a message.
+	 */
 	@ExceptionHandler(ResourceException.class)
 	public ResponseEntity<String> handleResourceException(ResourceException e) {
 		logger.error("Httpstatus : " + e.getHttpStatus() + ", Message : " + e.getMessage());
 		return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
 	}
 
+	/**
+	 * This method is called whenever there are properties exception.
+	 * 
+	 * @param e is an object of type PropertiesException.
+	 * @return a ResponseEntity containing the HttpStatus with a message and details.
+	 */
 	@ExceptionHandler(PropertiesException.class)
 	public ResponseEntity<Object> handlePropertiesException(PropertiesException e) {
 		Errors errors = new Errors();

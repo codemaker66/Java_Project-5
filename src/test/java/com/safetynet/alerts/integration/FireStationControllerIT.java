@@ -1,139 +1,215 @@
 package com.safetynet.alerts.integration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.List;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.safetynet.alerts.controller.FireStationController;
+import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.FireStation;
 
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@WebMvcTest(FireStationController.class)
-class FireStationControllerIT {	
-	
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class FireStationControllerIT {
+
+	@LocalServerPort
+	private int port;
+
 	@Autowired
-	private MockMvc mockMvc;
+	private TestRestTemplate restTemplate = new TestRestTemplate();
 
 	@Autowired
 	private ObjectMapper objectMapper;
-	
-	
+
+	private HttpHeaders headers = new HttpHeaders();
+
 	@Test
 	@Order(1)
-	void addAFireStationToTheList() throws Exception {
-		
-		FireStation fireStation = new FireStation();
+	void retrieveAllFireStationsFromTheList() throws JsonProcessingException {
 
-		fireStation.setAddress("address number 01");
-		fireStation.setStation(6);
-		
-		mockMvc.perform(
-				post("/firestation").contentType("application/json").content(objectMapper.writeValueAsString(fireStation)))
-				.andExpect(status().isCreated()).andExpect(content().string("The firestation was added to the list"));
+		// Given
+		List<FireStation> fireStations = Data.instance().getFireStations();
+
+		// When
+		String URL = "http://localhost:" + port + "/firestations";
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
+
+		// Then
+		String expected = objectMapper.writeValueAsString(fireStations);
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 	}
-	
+
 	@Test
 	@Order(2)
-	void addTheSameFireStationToTheList() throws Exception {
+	void addAFireStationToTheList() {
 
+		// Given
 		FireStation fireStation = new FireStation();
-
 		fireStation.setAddress("address number 01");
 		fireStation.setStation(6);
 
-		mockMvc.perform(
-				post("/firestation").contentType("application/json").content(objectMapper.writeValueAsString(fireStation)))
-				.andExpect(status().isBadRequest()).andExpect(content().string("A firestation with the same address already exist"));
+		// When
+		String URL = "http://localhost:" + port + "/firestation";
+		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+
+		// Then
+		String expected = "The firestation was added to the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
 	}
-	
+
 	@Test
 	@Order(3)
-	void forgetAPropertyWhenAddingAFireStationToTheList() throws Exception {
+	void addTheSameFireStationToTheList() {
 
+		// Given
 		FireStation fireStation = new FireStation();
+		fireStation.setAddress("address number 01");
+		fireStation.setStation(6);
 
+		// When
+		String URL = "http://localhost:" + port + "/firestation";
+		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+
+		// Then
+		String expected = "A firestation with the same address already exist";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
+
+	@Test
+	@Order(4)
+	void forgetAPropertyWhenAddingAFireStationToTheList() {
+
+		// Given
+		FireStation fireStation = new FireStation();
 		fireStation.setAddress("");
 		fireStation.setStation(6);
 
-		mockMvc.perform(
-				post("/firestation").contentType("application/json").content(objectMapper.writeValueAsString(fireStation)))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string("{\"message\":\"Validation failed\",\"details\":[\"address must have at least five characters\"]}"));
+		// When
+		String URL = "http://localhost:" + port + "/firestation";
+		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
+
+		// Then
+		String expected = "{\"message\":\"validation failed\",\"details\":[\"address must have at least five characters\"]}";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
 	}
-	
+
 	@Test
-	@Order(4)
-	void updateAFireStationInTheList() throws Exception {
+	@Order(5)
+	void updateAFireStationInTheList() {
 
+		// Given
 		FireStation fireStation = new FireStation();
-
 		fireStation.setAddress("address number 01");
 		fireStation.setStation(9);
 
-		mockMvc.perform(
-				put("/firestation").contentType("application/json").content(objectMapper.writeValueAsString(fireStation)))
-				.andExpect(status().isOk()).andExpect(content().string("The firestation was updated in the list"));
-		
+		// When
+		String URL = "http://localhost:" + port + "/firestation";
+		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
+
+		// Then
+		String expected = "The firestation was updated in the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
 	}
-	
+
 	@Test
-	@Order(5)
-	void updateAFireStationThatCantBeFoundInTheList() throws Exception {
+	@Order(6)
+	void updateAFireStationThatCantBeFoundInTheList() {
 
+		// Given
 		FireStation fireStation = new FireStation();
-
 		fireStation.setAddress("address number 99");
 		fireStation.setStation(9);
 
-		mockMvc.perform(
-				put("/firestation").contentType("application/json").content(objectMapper.writeValueAsString(fireStation)))
-				.andExpect(status().isNotFound()).andExpect(content().string("This firestation does not exist in the list"));
+		// When
+		String URL = "http://localhost:" + port + "/firestation";
+		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
+
+		// Then
+		String expected = "This firestation does not exist in the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
-	
-	@Test
-	@Order(6)
-	void forgetAPropertyWhenUpdatingAFireStationInTheList() throws Exception {
 
-		FireStation fireStation = new FireStation();
-
-		fireStation.setAddress("");
-		fireStation.setStation(9);
-
-		mockMvc.perform(
-				put("/firestation").contentType("application/json").content(objectMapper.writeValueAsString(fireStation)))
-				.andExpect(status().isBadRequest()).andExpect(content().string("{\"message\":\"Validation failed\",\"details\":[\"address must have at least five characters\"]}"));
-	}
-	
 	@Test
 	@Order(7)
-	void deleteAFireStationFromTheList() throws Exception {
+	void forgetAPropertyWhenUpdatingAFireStationInTheList() {
 
-		mockMvc.perform(
-				delete("/firestation?station=9&address=address number 01"))
-				.andExpect(status().isOk()).andExpect(content().string("The firestation was deleted from the list"));
+		// Given
+		FireStation fireStation = new FireStation();
+		fireStation.setAddress("address number 01");
+		fireStation.setStation(0);
+
+		// When
+		String URL = "http://localhost:" + port + "/firestation";
+		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
+
+		// Then
+		String expected = "{\"message\":\"validation failed\",\"details\":[\"station must be at least one number\"]}";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
 	}
-	
+
 	@Test
 	@Order(8)
-	void deleteAFireStationThatDontExistInTheList() throws Exception {
+	void deleteAFireStationFromTheList() {
 
-		mockMvc.perform(
-				delete("/firestation?station=9&address=address number 99"))
-				.andExpect(status().isNotFound()).andExpect(content().string("There are no firestation with the station : 9 and the address : address number 99 in the list"));
+		// When
+		String URL = "http://localhost:" + port + "/firestation?station=9&address=address number 01";
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
+
+		// Then
+		String expected = "The firestation was deleted from the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+	}
+
+	@Test
+	@Order(9)
+	void deleteAFireStationThatCantBeFoundInTheList() {
+
+		// When
+		String URL = "http://localhost:" + port + "/firestation?station=9&address=address number 99";
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
+
+		// Then
+		String expected = "There are no firestation with the station : 9 and the address : address number 99 in the list";
+		assertThat(response.getBody()).isEqualTo(expected);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
 	}
 
 }

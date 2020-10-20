@@ -2,12 +2,20 @@ package com.safetynet.alerts.service;
 
 import java.util.List;
 
-import com.safetynet.alerts.dao.PersonDaoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.safetynet.alerts.dao.PersonDao;
 import com.safetynet.alerts.model.Person;
 
+@Service
 public class PersonService {
 
-	private PersonDaoImpl personDaoImpl = new PersonDaoImpl();
+	@Autowired
+	private PersonDao personDaoImpl;
+	private static final Logger logger = LogManager.getLogger(PersonService.class);
 
 	/**
 	 * This method call the personDaoImpl to retrieve all persons from the list.
@@ -34,6 +42,7 @@ public class PersonService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}
@@ -52,6 +61,7 @@ public class PersonService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}
@@ -71,6 +81,7 @@ public class PersonService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 	}
 

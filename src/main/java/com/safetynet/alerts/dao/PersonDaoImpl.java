@@ -2,11 +2,14 @@ package com.safetynet.alerts.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.Person;
 
+@Repository
 public class PersonDaoImpl implements PersonDao {
-	
+
 	private List<Person> persons = Data.instance().getPersons();
 
 	/**

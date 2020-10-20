@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,8 @@ import com.safetynet.alerts.service.FireStationService;
 @RestController
 public class FireStationController {
 
-	private FireStationService fireStationService = new FireStationService();
+	@Autowired
+	private FireStationService fireStationService;
 	private static final Logger logger = LogManager.getLogger(FireStationController.class);
 
 	/**
@@ -121,7 +123,7 @@ public class FireStationController {
 			return ResponseEntity.status(HttpStatus.OK).body("The firestation was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND, "There are no firestation with the station : " + station
-					+ " and the address : " + (address.isEmpty() ? "\"null value\"" : address + " in the list"));
+										+ " and the address : " + (address.isEmpty() ? "\"null value\"" : address + " in the list"));
 		}
 
 	}

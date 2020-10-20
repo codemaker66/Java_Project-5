@@ -2,12 +2,18 @@ package com.safetynet.alerts.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.safetynet.alerts.data.DataManagement;
 import com.safetynet.alerts.model.Output;
 
+@Repository
 public class OutputDaoImpl implements OutputDao {
 	
-	private DataManagement dataManagement = new DataManagement();
+	@Autowired
+	private DataManagement dataManagement;
 
 	/**
 	 * @see com.safetynet.alerts.dao.OutputDao#retrievePersonsByFireStationNumber(int)

@@ -2,10 +2,14 @@ package com.safetynet.alerts.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.MedicalRecord;
 
+@Repository
 public class MedicalRecordDaoImpl implements MedicalRecordDao {
+	
 	
 	private List<MedicalRecord> medicalRecords = Data.instance().getMedicalRecords();
 

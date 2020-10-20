@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,8 @@ import com.safetynet.alerts.service.PersonService;
 @RestController
 public class PersonController {
 
-	private PersonService personService = new PersonService();
+	@Autowired
+	private PersonService personService;
 	private static final Logger logger = LogManager.getLogger(PersonController.class);
 
 	/**
@@ -63,14 +65,14 @@ public class PersonController {
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
 				details.add(fieldError.getDefaultMessage());
 			}
-			throw new PropertiesException(HttpStatus.BAD_REQUEST, "Validation failed", details);
+			throw new PropertiesException(HttpStatus.BAD_REQUEST, "validation failed", details);
 		}
 
 		if (personService.addAPerson(person)) {
 			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The person was added to the list");
 			return ResponseEntity.status(HttpStatus.CREATED).body("The person was added to the list");
 		} else {
-			throw new ResourceException(HttpStatus.BAD_REQUEST, "A person with the same first and lastname already exist");
+			throw new ResourceException(HttpStatus.BAD_REQUEST, "A person with the same first and last name already exist");
 		}
 
 	}
@@ -92,7 +94,7 @@ public class PersonController {
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
 				details.add(fieldError.getDefaultMessage());
 			}
-			throw new PropertiesException(HttpStatus.BAD_REQUEST, "Validation failed", details);
+			throw new PropertiesException(HttpStatus.BAD_REQUEST, "validation failed", details);
 		}
 
 		if (personService.updateAPerson(person)) {
@@ -122,8 +124,8 @@ public class PersonController {
 			return ResponseEntity.status(HttpStatus.OK).body("The person was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					"There are no person with the firstname : " + (firstName.isEmpty() ? "\"null value\"" : firstName)
-							+ " and the lastname : " + (lastName.isEmpty() ? "\"null value\"" : lastName)
+					"There are no person with the first name : " + (firstName.isEmpty() ? "\"null value\"" : firstName)
+							+ " and the last name : " + (lastName.isEmpty() ? "\"null value\"" : lastName)
 							+ " in the list");
 		}
 

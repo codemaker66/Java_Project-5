@@ -2,12 +2,20 @@ package com.safetynet.alerts.service;
 
 import java.util.List;
 
-import com.safetynet.alerts.dao.MedicalRecordDaoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.safetynet.alerts.dao.MedicalRecordDao;
 import com.safetynet.alerts.model.MedicalRecord;
 
+@Service
 public class MedicalRecordService {
 
-	private MedicalRecordDaoImpl medicalRecordDaoImpl = new MedicalRecordDaoImpl();
+	@Autowired
+	private MedicalRecordDao medicalRecordDaoImpl;
+	private static final Logger logger = LogManager.getLogger(MedicalRecordService.class);
 
 	/**
 	 * This method call the medicalRecordDaoImpl to retrieve all medical records from the list.
@@ -34,6 +42,7 @@ public class MedicalRecordService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}
@@ -52,6 +61,7 @@ public class MedicalRecordService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 	}
 
@@ -70,6 +80,7 @@ public class MedicalRecordService {
 			check = true;
 		}
 
+		logger.debug("Check is : " + check);
 		return check;
 
 	}

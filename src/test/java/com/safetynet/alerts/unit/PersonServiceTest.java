@@ -2,6 +2,7 @@ package com.safetynet.alerts.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -9,17 +10,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-
-import com.safetynet.alerts.controller.PersonController;
 import com.safetynet.alerts.dao.PersonDao;
-import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.Person;
 import com.safetynet.alerts.service.PersonService;
 
-@WebMvcTest(PersonController.class)
-@ContextConfiguration(classes = PersonService.class)
-class PersonControllerTest {
+@WebMvcTest(PersonService.class)
+class PersonServiceTest {
 
 	@MockBean
 	private PersonDao PersonDaoImpl;
@@ -31,7 +27,27 @@ class PersonControllerTest {
 	void getAllPersons() {
 
 		// Given
-		List<Person> list = Data.instance().getPersons();
+		Person person = new Person();
+		person.setFirstName("Jo");
+		person.setLastName("Boyd");
+		person.setAddress("1509 Culver St");
+		person.setCity("Culver");
+		person.setZip(97451);
+		person.setPhone("841-874-6512");
+		person.setEmail("jaboyd@email.com");
+
+		Person person2 = new Person();
+		person2.setFirstName("Joe");
+		person2.setLastName("Boy");
+		person2.setAddress("25 Culver St");
+		person2.setCity("Culver");
+		person2.setZip(97368);
+		person2.setPhone("889-831-4791");
+		person2.setEmail("jaboy@email.com");
+
+		List<Person> list = new ArrayList<>();
+		list.add(person);
+		list.add(person2);
 
 		// When
 		Mockito.when(PersonDaoImpl.retrieveAllPersonsFromTheList()).thenReturn(list);

@@ -85,54 +85,6 @@ class MedicalRecordControllerIT {
 
 	@Test
 	@Order(3)
-	void addTheSameMedicalRecordToTheList() {
-
-		// Given
-		MedicalRecord medicalRecord = new MedicalRecord();
-		List<String> medications = Arrays.asList("medication1", "medication2");
-		List<String> allergies = Arrays.asList("allergy1", "allergy2");
-		medicalRecord.setFirstName("Jo");
-		medicalRecord.setLastName("Boyd");
-		medicalRecord.setBirthdate("01/02/1980");
-		medicalRecord.setMedications(medications);
-		medicalRecord.setAllergies(allergies);
-
-		// When
-		String URL = "http://localhost:" + port + "/medicalRecord";
-		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
-
-		// Then
-		String expected = "A medicalrecord with the same first and last name already exist";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-	}
-
-	@Test
-	@Order(4)
-	void forgetAPropertyWhenAddingAMedicalRecordToTheList() {
-
-		// Given
-		MedicalRecord medicalRecord = new MedicalRecord();
-		medicalRecord.setFirstName("");
-		medicalRecord.setLastName("Boyd");
-		medicalRecord.setBirthdate("01/02/1980");
-
-		// When
-		String URL = "http://localhost:" + port + "/medicalRecord";
-		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
-
-		// Then
-		String expected = "{\"message\":\"validation failed\",\"details\":[\"firstName must have at least one character\"]}";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-	}
-
-	@Test
-	@Order(5)
 	void giveAWrongBirthDateWhenAddingAMedicalRecordToTheList() {
 
 		// Given
@@ -154,7 +106,7 @@ class MedicalRecordControllerIT {
 	}
 
 	@Test
-	@Order(6)
+	@Order(4)
 	void updateAMedicalRecordInTheList() {
 
 		// Given
@@ -180,80 +132,7 @@ class MedicalRecordControllerIT {
 	}
 
 	@Test
-	@Order(7)
-	void updateAMedicalRecordThatCantBeFoundInTheList() {
-
-		// Given
-		MedicalRecord medicalRecord = new MedicalRecord();
-		medicalRecord.setFirstName("Joe");
-		medicalRecord.setLastName("Boy");
-		medicalRecord.setBirthdate("01/07/1980");
-
-		// When
-		String URL = "http://localhost:" + port + "/medicalRecord";
-		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
-
-		// Then
-		String expected = "This medicalrecord does not exist in the list";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
-	}
-
-	@Test
-	@Order(8)
-	void forgetAPropertyWhenUpdatingAMedicalRecordInTheList() {
-
-		// Given
-		MedicalRecord medicalRecord = new MedicalRecord();
-		List<String> medications = Arrays.asList("medication1");
-		List<String> allergies = Arrays.asList("allergy1");
-		medicalRecord.setFirstName("Jo");
-		medicalRecord.setLastName("");
-		medicalRecord.setBirthdate("01/07/1980");
-		medicalRecord.setMedications(medications);
-		medicalRecord.setAllergies(allergies);
-
-		// When
-		String URL = "http://localhost:" + port + "/medicalRecord";
-		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
-
-		// Then
-		String expected = "{\"message\":\"validation failed\",\"details\":[\"lastName must have at least one character\"]}";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-	}
-
-	@Test
-	@Order(9)
-	void giveAWrongBirthDateWhenUpdatingAMedicalRecordToTheList() {
-
-		// Given
-		MedicalRecord medicalRecord = new MedicalRecord();
-		List<String> medications = Arrays.asList("medication1");
-		List<String> allergies = Arrays.asList("allergy1");
-		medicalRecord.setFirstName("Jo");
-		medicalRecord.setLastName("Boyd");
-		medicalRecord.setBirthdate("01/07/4000");
-		medicalRecord.setMedications(medications);
-		medicalRecord.setAllergies(allergies);
-
-		// When
-		String URL = "http://localhost:" + port + "/medicalRecord";
-		HttpEntity<MedicalRecord> entity = new HttpEntity<MedicalRecord>(medicalRecord, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
-
-		// Then
-		String expected = "The date provided is null or not valid, must be of format : \"dd/MM/yyyy\"";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-	}
-
-	@Test
-	@Order(10)
+	@Order(5)
 	void deleteAMedicalRecordFromTheList() {
 
 		// When
@@ -265,22 +144,6 @@ class MedicalRecordControllerIT {
 		String expected = "The medicalrecord was deleted from the list";
 		assertThat(response.getBody()).isEqualTo(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-	}
-
-	@Test
-	@Order(11)
-	void deleteAMedicalRecordThatCantBeFoundInTheList() {
-
-		// When
-		String URL = "http://localhost:" + port + "/medicalRecord?firstName=Joe&lastName=Boy";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
-
-		// Then
-		String expected = "There are no medicalrecord for a person with the first name : Joe and the last name : Boy in the list";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
 	}
 

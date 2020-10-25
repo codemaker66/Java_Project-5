@@ -10,7 +10,11 @@ import com.safetynet.alerts.model.FireStation;
 @Repository
 public class FireStationDaoImpl implements FireStationDao {
 	
-	private List<FireStation> fireStations = Data.instance().getFireStations();
+	private List<FireStation> fireStations;
+	
+	public FireStationDaoImpl() {
+		fireStations = Data.instance().getFireStations();
+	}
 
 	/**
 	 * @see com.safetynet.alerts.dao.FireStationDao#retrieveAllFireStationsFromTheList()

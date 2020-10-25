@@ -2,6 +2,7 @@ package com.safetynet.alerts.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,17 +11,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-
-import com.safetynet.alerts.controller.MedicalRecordController;
 import com.safetynet.alerts.dao.MedicalRecordDao;
-import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.MedicalRecord;
 import com.safetynet.alerts.service.MedicalRecordService;
 
-@WebMvcTest(MedicalRecordController.class)
-@ContextConfiguration(classes = MedicalRecordService.class)
-class MedicalRecordControllerTest {
+@WebMvcTest(MedicalRecordService.class)
+class MedicalRecordServiceTest {
 
 	@MockBean
 	private MedicalRecordDao medicalRecordDaoImpl;
@@ -32,7 +28,25 @@ class MedicalRecordControllerTest {
 	void getAllMedicalRecords() {
 
 		// Given
-		List<MedicalRecord> list = Data.instance().getMedicalRecords();
+		MedicalRecord medicalRecord = new MedicalRecord();
+		List<String> medications = Arrays.asList("medication1", "medication2");
+		List<String> allergies = Arrays.asList("allergy1", "allergy2");
+		medicalRecord.setFirstName("Jo");
+		medicalRecord.setLastName("Boyd");
+		medicalRecord.setBirthdate("01/02/1980");
+		medicalRecord.setMedications(medications);
+		medicalRecord.setAllergies(allergies);
+
+		MedicalRecord medicalRecord2 = new MedicalRecord();
+		medicalRecord2.setFirstName("Joe");
+		medicalRecord2.setLastName("Boy");
+		medicalRecord2.setBirthdate("04/10/1990");
+		medicalRecord2.setMedications(medications);
+		medicalRecord2.setAllergies(allergies);
+
+		List<MedicalRecord> list = new ArrayList<>();
+		list.add(medicalRecord);
+		list.add(medicalRecord2);
 
 		// When
 		Mockito.when(medicalRecordDaoImpl.retrieveAllMedicalRecordsFromTheList()).thenReturn(list);

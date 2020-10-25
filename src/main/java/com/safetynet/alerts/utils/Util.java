@@ -9,6 +9,9 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Util {
 
 	/**
@@ -54,7 +57,7 @@ public class Util {
 			date = format.parse(birthdate);
 			localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		} catch (ParseException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 		
 		LocalDate now = LocalDate.now();

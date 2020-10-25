@@ -68,7 +68,7 @@ public class MedicalRecordController {
 			}
 			throw new PropertiesException(HttpStatus.BAD_REQUEST, "validation failed", details);
 		}
-
+		
 		Util util = new Util();
 
 		if (!util.isValid(medicalRecord.getBirthdate())) {
@@ -104,7 +104,7 @@ public class MedicalRecordController {
 			}
 			throw new PropertiesException(HttpStatus.BAD_REQUEST, "validation failed", details);
 		}
-
+		
 		Util util = new Util();
 
 		if (!util.isValid(medicalRecord.getBirthdate())) {

@@ -71,21 +71,6 @@ class OutputControllerIT {
 	}
 
 	@Test
-	void retrievePersonsWithANonExistentFireStationNumber() {
-
-		// When
-		String URL = "http://localhost:" + port + "/firestation?stationNumber=44";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "There are no persons served by the fire station number : 44";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
-	}
-
-	@Test
 	void retrieveChildrenByAddress() throws Exception {
 
 		// Given
@@ -128,21 +113,6 @@ class OutputControllerIT {
 	}
 
 	@Test
-	void retrieveChildrenWithANonExistentAddress() {
-
-		// When
-		String URL = "http://localhost:" + port + "/childAlert?address=random address name";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "There are no children living at this address : random address name";
-		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
-	}
-
-	@Test
 	void retrievePhoneNumbersByFireStationNumber() throws Exception {
 
 		// Given
@@ -164,21 +134,6 @@ class OutputControllerIT {
 		String expected = objectMapper.writeValueAsString(data);
 		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-	}
-
-	@Test
-	void retrievePhoneNumbersWithANonExistentFireStationNumber() {
-
-		// When
-		String URL = "http://localhost:" + port + "/phoneAlert?firestation=44";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "There are no phone numbers registered by the fire station number : 44";
-		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
 	}
 
 	@Test
@@ -212,21 +167,6 @@ class OutputControllerIT {
 		String expected = objectMapper.writeValueAsString(data);
 		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-	}
-
-	@Test
-	void retrievePersonsWithoutAnAddress() {
-
-		// When
-		String URL = "http://localhost:" + port + "/fire?address=";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "You didn't provide an address";
-		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
 	}
 
@@ -332,21 +272,6 @@ class OutputControllerIT {
 	}
 
 	@Test
-	void retrievePersonsWithNonExistentFireStationNumbers() {
-
-		// When
-		String URL = "http://localhost:" + port + "/flood/stations?stations=6,10";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "There are no persons served by these fire station numbers : [6, 10]";
-		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
-	}
-
-	@Test
 	void retrievePersonByFirstAndLastName() throws Exception {
 
 		// Given
@@ -374,21 +299,6 @@ class OutputControllerIT {
 		String expected = objectMapper.writeValueAsString(data);
 		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-	}
-
-	@Test
-	void retrievePersonByFirstAndLastNameWithErrors() {
-
-		// When
-		String URL = "http://localhost:" + port + "/personInfo?firstName=Foster&lastName=";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "There are no person with the firstname : Foster and the lastname \"null value\" in the list";
-		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
 	}
 
@@ -422,21 +332,6 @@ class OutputControllerIT {
 		String expected = objectMapper.writeValueAsString(data);
 		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-	}
-
-	@Test
-	void retrieveEmailsWithANonExistenCity() {
-
-		// When
-		String URL = "http://localhost:" + port + "/communityEmail?city=random city name";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, entity, String.class);
-
-		// Then
-		String expected = "There are no emails registered for this city : random city name";
-		assertThat(response.getBody()).isEqualToIgnoringWhitespace(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
 	}
 

@@ -2,6 +2,7 @@ package com.safetynet.alerts.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -9,17 +10,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-
-import com.safetynet.alerts.controller.FireStationController;
 import com.safetynet.alerts.dao.FireStationDao;
-import com.safetynet.alerts.data.Data;
 import com.safetynet.alerts.model.FireStation;
 import com.safetynet.alerts.service.FireStationService;
 
-@WebMvcTest(FireStationController.class)
-@ContextConfiguration(classes = FireStationService.class)
-class FireStationControllerTest {
+@WebMvcTest(FireStationService.class)
+class FireStationServiceTest {
 
 	@MockBean
 	private FireStationDao FireStationDaoImpl;
@@ -31,7 +27,17 @@ class FireStationControllerTest {
 	void getAllFireStations() {
 
 		// Given
-		List<FireStation> list = Data.instance().getFireStations();
+		FireStation fireStation = new FireStation();
+		fireStation.setAddress("address number 01");
+		fireStation.setStation(5);
+
+		FireStation fireStation2 = new FireStation();
+		fireStation2.setAddress("address number 02");
+		fireStation2.setStation(6);
+
+		List<FireStation> list = new ArrayList<>();
+		list.add(fireStation);
+		list.add(fireStation2);
 
 		// When
 		Mockito.when(FireStationDaoImpl.retrieveAllFireStationsFromTheList()).thenReturn(list);

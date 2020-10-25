@@ -80,47 +80,6 @@ class FireStationControllerIT {
 
 	@Test
 	@Order(3)
-	void addTheSameFireStationToTheList() {
-
-		// Given
-		FireStation fireStation = new FireStation();
-		fireStation.setAddress("address number 01");
-		fireStation.setStation(6);
-
-		// When
-		String URL = "http://localhost:" + port + "/firestation";
-		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
-
-		// Then
-		String expected = "A firestation with the same address already exist";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-	}
-
-	@Test
-	@Order(4)
-	void forgetAPropertyWhenAddingAFireStationToTheList() {
-
-		// Given
-		FireStation fireStation = new FireStation();
-		fireStation.setAddress("");
-		fireStation.setStation(6);
-
-		// When
-		String URL = "http://localhost:" + port + "/firestation";
-		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
-
-		// Then
-		String expected = "{\"message\":\"validation failed\",\"details\":[\"address must have at least five characters\"]}";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-	}
-
-	@Test
-	@Order(5)
 	void updateAFireStationInTheList() {
 
 		// Given
@@ -141,48 +100,7 @@ class FireStationControllerIT {
 	}
 
 	@Test
-	@Order(6)
-	void updateAFireStationThatCantBeFoundInTheList() {
-
-		// Given
-		FireStation fireStation = new FireStation();
-		fireStation.setAddress("address number 99");
-		fireStation.setStation(9);
-
-		// When
-		String URL = "http://localhost:" + port + "/firestation";
-		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
-
-		// Then
-		String expected = "This firestation does not exist in the list";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-	}
-
-	@Test
-	@Order(7)
-	void forgetAPropertyWhenUpdatingAFireStationInTheList() {
-
-		// Given
-		FireStation fireStation = new FireStation();
-		fireStation.setAddress("address number 01");
-		fireStation.setStation(0);
-
-		// When
-		String URL = "http://localhost:" + port + "/firestation";
-		HttpEntity<FireStation> entity = new HttpEntity<FireStation>(fireStation, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
-
-		// Then
-		String expected = "{\"message\":\"validation failed\",\"details\":[\"station must be at least one number\"]}";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-	}
-
-	@Test
-	@Order(8)
+	@Order(4)
 	void deleteAFireStationFromTheList() {
 
 		// When
@@ -194,22 +112,6 @@ class FireStationControllerIT {
 		String expected = "The firestation was deleted from the list";
 		assertThat(response.getBody()).isEqualTo(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-	}
-
-	@Test
-	@Order(9)
-	void deleteAFireStationThatCantBeFoundInTheList() {
-
-		// When
-		String URL = "http://localhost:" + port + "/firestation?station=9&address=address number 99";
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
-
-		// Then
-		String expected = "There are no firestation with the station : 9 and the address : address number 99 in the list";
-		assertThat(response.getBody()).isEqualTo(expected);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
 	}
 
 }

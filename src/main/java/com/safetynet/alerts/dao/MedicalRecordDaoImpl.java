@@ -10,8 +10,11 @@ import com.safetynet.alerts.model.MedicalRecord;
 @Repository
 public class MedicalRecordDaoImpl implements MedicalRecordDao {
 	
+	private List<MedicalRecord> medicalRecords;
 	
-	private List<MedicalRecord> medicalRecords = Data.instance().getMedicalRecords();
+	public MedicalRecordDaoImpl() {
+		 medicalRecords = Data.instance().getMedicalRecords();
+	}
 
 	/**
 	 * @see com.safetynet.alerts.dao.MedicalRecordDao#retrieveAllMedicalRecordsFromTheList()

@@ -1,12 +1,14 @@
 package com.safetynet.alerts.filters;
 
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.safetynet.alerts.model.Output;
 
+@Component
 public class Filter {
 
 	/**

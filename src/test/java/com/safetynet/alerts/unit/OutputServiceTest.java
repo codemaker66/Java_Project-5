@@ -10,16 +10,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-
-import com.safetynet.alerts.controller.OutputController;
 import com.safetynet.alerts.dao.OutputDao;
 import com.safetynet.alerts.model.Output;
 import com.safetynet.alerts.service.OutputService;
 
-@WebMvcTest(OutputController.class)
-@ContextConfiguration(classes = OutputService.class)
-class OutputControllerTest {
+@WebMvcTest(OutputService.class)
+class OutputServiceTest {
 
 	@MockBean
 	private OutputDao outputDaoImpl;

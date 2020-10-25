@@ -36,7 +36,7 @@ public class OutputController {
 		Output output = outputService.findPersonsByFireStationNumber(stationNumber);
 
 		if (output.getPersons() != null && !output.getPersons().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
@@ -62,7 +62,7 @@ public class OutputController {
 		Output output = outputService.findChildrenByAddress(address);
 
 		if (output.getChildren() != null && !output.getChildren().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
@@ -89,7 +89,7 @@ public class OutputController {
 		Output output = outputService.findPhoneNumbersByFireStationNumber(firestation);
 
 		if (output.getPhoneNumbers() != null && !output.getPhoneNumbers().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
@@ -115,7 +115,7 @@ public class OutputController {
 		Output output = outputService.findPersonsByAddress(address);
 
 		if (output.getPersons() != null && !output.getPersons().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
@@ -142,7 +142,7 @@ public class OutputController {
 		Output output = outputService.findPersonsByFireStationNumbers(stations);
 
 		if (output.getPersonsGroupedByAddress() != null && !output.getPersonsGroupedByAddress().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
@@ -172,7 +172,7 @@ public class OutputController {
 		Output output = outputService.findPersonByFirstAndLastName(firstName, lastName);
 
 		if (output.getPersons() != null && !output.getPersons().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");
@@ -201,7 +201,7 @@ public class OutputController {
 		Output output = outputService.findEmailsByCity(city);
 
 		if (output.getEmails() != null && !output.getEmails().isEmpty()) {
-
+			
 			Filter filter = new Filter();
 
 			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : Response received with success");

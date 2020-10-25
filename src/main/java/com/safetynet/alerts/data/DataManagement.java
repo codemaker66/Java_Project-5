@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -117,7 +116,7 @@ public class DataManagement {
 	 * @return a list containing all the data from the three main lists.
 	 */
 	public List<Output> load() {
-
+		
 		Util util = new Util();
 		List<Output> outputData = new ArrayList<>();
 

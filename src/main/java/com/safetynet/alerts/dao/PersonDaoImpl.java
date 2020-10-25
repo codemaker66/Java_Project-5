@@ -10,7 +10,11 @@ import com.safetynet.alerts.model.Person;
 @Repository
 public class PersonDaoImpl implements PersonDao {
 
-	private List<Person> persons = Data.instance().getPersons();
+	private List<Person> persons;
+	
+	public PersonDaoImpl() {
+		persons = Data.instance().getPersons();
+	}
 
 	/**
 	 * @see com.safetynet.alerts.dao.PersonDao#retrieveAllPersonsFromTheList()

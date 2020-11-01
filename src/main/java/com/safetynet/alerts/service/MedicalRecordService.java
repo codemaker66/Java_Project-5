@@ -69,7 +69,7 @@ public class MedicalRecordService {
 	 * This method call the medicalRecordDaoImpl to delete a medical record from the list.
 	 * 
 	 * @param firstName represent the first name of a person.
-	 * @param lastName  represent the last name of a person.
+	 * @param lastName represent the last name of a person.
 	 * @return true if the medical record was deleted from the list.
 	 */
 	public boolean deleteAMedicalRecord(String firstName, String lastName) {

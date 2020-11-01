@@ -44,7 +44,7 @@ class FireStationServiceTest {
 
 		// Then
 		List<FireStation> expected = fireStationService.getAllFireStations();
-		assertThat(expected).isEqualTo(list);
+		assertThat(list).isEqualTo(expected);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ class FireStationServiceTest {
 		fireStation.setStation(6);
 
 		// When
-		Mockito.when(FireStationDaoImpl.addAFireStationToTheList(fireStation)).thenReturn(true);
+		Mockito.when(FireStationDaoImpl.addAFireStationToTheList(Mockito.any(FireStation.class))).thenReturn(true);
 
 		// Then
 		boolean expected = fireStationService.addAFireStation(fireStation);
@@ -72,7 +72,7 @@ class FireStationServiceTest {
 		fireStation.setStation(9);
 
 		// When
-		Mockito.when(FireStationDaoImpl.updateAFireStationInTheList(fireStation)).thenReturn(true);
+		Mockito.when(FireStationDaoImpl.updateAFireStationInTheList(Mockito.any(FireStation.class))).thenReturn(true);
 
 		// Then
 		boolean expected = fireStationService.updateAFireStation(fireStation);

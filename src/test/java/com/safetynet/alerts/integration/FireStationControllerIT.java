@@ -72,7 +72,7 @@ class FireStationControllerIT {
 		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
 
 		// Then
-		String expected = "The firestation was added to the list";
+		String expected = "The fire station was added to the list";
 		assertThat(response.getBody()).isEqualTo(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
@@ -93,7 +93,7 @@ class FireStationControllerIT {
 		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.PUT, entity, String.class);
 
 		// Then
-		String expected = "The firestation was updated in the list";
+		String expected = "The fire station was updated in the list";
 		assertThat(response.getBody()).isEqualTo(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -109,7 +109,7 @@ class FireStationControllerIT {
 		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.DELETE, entity, String.class);
 
 		// Then
-		String expected = "The firestation was deleted from the list";
+		String expected = "The fire station was deleted from the list";
 		assertThat(response.getBody()).isEqualTo(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}

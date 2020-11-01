@@ -57,7 +57,7 @@ public class Util {
 			date = format.parse(birthdate);
 			localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		} catch (ParseException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		LocalDate now = LocalDate.now();

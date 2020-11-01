@@ -103,7 +103,7 @@ class PersonControllerIT {
 		ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.POST, entity, String.class);
 
 		// Then
-		String expected = "A person with the same first and last name already exist";
+		String expected = "A person with the same first and last name already exist in the list";
 		assertThat(response.getBody()).isEqualTo(expected);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 

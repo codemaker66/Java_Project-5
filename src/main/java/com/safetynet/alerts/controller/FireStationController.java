@@ -68,10 +68,10 @@ public class FireStationController {
 		}
 
 		if (fireStationService.addAFireStation(fireStation)) {
-			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The firestation was added to the list");
-			return ResponseEntity.status(HttpStatus.CREATED).body("The firestation was added to the list");
+			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The fire station was added to the list");
+			return ResponseEntity.status(HttpStatus.CREATED).body("The fire station was added to the list");
 		} else {
-			throw new ResourceException(HttpStatus.BAD_REQUEST, "A firestation with the same address already exist");
+			throw new ResourceException(HttpStatus.BAD_REQUEST, "A fire station with the same address already exist in the list");
 		}
 
 	}
@@ -97,10 +97,10 @@ public class FireStationController {
 		}
 
 		if (fireStationService.updateAFireStation(fireStation)) {
-			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The firestation was updated in the list");
-			return ResponseEntity.status(HttpStatus.OK).body("The firestation was updated in the list");
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The fire station was updated in the list");
+			return ResponseEntity.status(HttpStatus.OK).body("The fire station was updated in the list");
 		} else {
-			throw new ResourceException(HttpStatus.NOT_FOUND, "This firestation does not exist in the list");
+			throw new ResourceException(HttpStatus.NOT_FOUND, "This fire station does not exist in the list");
 		}
 
 	}
@@ -119,10 +119,10 @@ public class FireStationController {
 		logger.info("The user requested the url : /firestation with the DELETE method");
 
 		if (fireStationService.deleteAFireStation(station, address)) {
-			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The firestation was deleted from the list");
-			return ResponseEntity.status(HttpStatus.OK).body("The firestation was deleted from the list");
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The fire station was deleted from the list");
+			return ResponseEntity.status(HttpStatus.OK).body("The fire station was deleted from the list");
 		} else {
-			throw new ResourceException(HttpStatus.NOT_FOUND, "There are no firestation with the station : " + station
+			throw new ResourceException(HttpStatus.NOT_FOUND, "There are no fire station with the station number : " + station
 										+ " and the address : " + (address.isEmpty() ? "\"null value\"" : address + " in the list"));
 		}
 

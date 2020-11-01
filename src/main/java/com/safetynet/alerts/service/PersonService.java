@@ -70,7 +70,7 @@ public class PersonService {
 	 * This method call the personDaoImpl to delete a person from the list.
 	 * 
 	 * @param firstName represent the first name of a person.
-	 * @param lastName  represent the last name of a person.
+	 * @param lastName represent the last name of a person.
 	 * @return true if the person was deleted from the list.
 	 */
 	public boolean deleteAPerson(String firstName, String lastName) {

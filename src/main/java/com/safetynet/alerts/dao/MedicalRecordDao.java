@@ -32,7 +32,7 @@ public interface MedicalRecordDao {
 	 * This method delete a medical record from the list.
 	 * 
 	 * @param firstName represent the first name of a person.
-	 * @param lastName  represent the last name of a person.
+	 * @param lastName represent the last name of a person.
 	 * @return true if the medical record was deleted from the list.
 	 */
 	public boolean deleteAMedicalRecordFromTheList(String firstName, String lastName);

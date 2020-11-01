@@ -22,16 +22,13 @@ public class OutputDaoImpl implements OutputDao {
 	public List<Output> retrievePersonsByFireStationNumber(int stationNumber) {
 
 		List<Output> dataList = dataManagement.load();
-
 		List<Output> persons = new ArrayList<>();
-
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {
 			if (dataList.get(i).getFireStationNumber() == stationNumber) {
 				persons.add(dataList.get(i));
 			}
-
 		}
 
 		for (int i = 0; i < persons.size(); i++) {
@@ -71,9 +68,11 @@ public class OutputDaoImpl implements OutputDao {
 			if (persons.get(i).getAge() <= 18) {
 
 				Output output = new Output();
+				
 				output.setFirstName(persons.get(i).getFirstName());
 				output.setLastName(persons.get(i).getLastName());
 				output.setAge(persons.get(i).getAge());
+				
 				list.add(output);
 			}
 		}
@@ -85,11 +84,12 @@ public class OutputDaoImpl implements OutputDao {
 					&& !list.get(i).getFirstName().equals(persons.get(j).getFirstName())) {
 
 					Output output = new Output();
+					
 					output.setFirstName(persons.get(j).getFirstName());
 					output.setLastName(persons.get(j).getLastName());
 					output.setAge(persons.get(j).getAge());
+					
 					famillyMembers.add(output);
-
 				}
 			}
 			list.get(i).setFamillyMembers(famillyMembers);
@@ -113,7 +113,6 @@ public class OutputDaoImpl implements OutputDao {
 				output.setPhone(dataList.get(i).getPhone());
 				list.add(output);
 			}
-
 		}
 
 		return list;
@@ -154,7 +153,6 @@ public class OutputDaoImpl implements OutputDao {
 	public List<Output> retrievePersonsByFireStationNumbers(List<Integer> stations) {
 
 		List<Output> dataList = dataManagement.load();
-
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < stations.size(); i++) {
@@ -172,7 +170,6 @@ public class OutputDaoImpl implements OutputDao {
 
 					list.add(output);
 				}
-
 			}
 		}
 
@@ -186,12 +183,12 @@ public class OutputDaoImpl implements OutputDao {
 	public List<Output> retrievePersonByFirstAndLastName(String firstName, String lastName) {
 
 		List<Output> dataList = dataManagement.load();
-
 		List<Output> list = new ArrayList<>();
 
 		for (int i = 0; i < dataList.size(); i++) {
 			if (dataList.get(i).getFirstName().equals(firstName) && dataList.get(i).getLastName().equals(lastName)
 				|| !dataList.get(i).getFirstName().equals(firstName) && dataList.get(i).getLastName().equals(lastName)) {
+				
 				Output output = new Output();
 
 				output.setLastName(dataList.get(i).getLastName());
@@ -224,6 +221,7 @@ public class OutputDaoImpl implements OutputDao {
 				list.add(output);
 			}
 		}
+		
 		return list;
 	}
 

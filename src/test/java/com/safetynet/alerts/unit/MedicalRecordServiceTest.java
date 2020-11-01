@@ -53,7 +53,7 @@ class MedicalRecordServiceTest {
 
 		// Then
 		List<MedicalRecord> expected = medicalRecordService.getAllMedicalRecords();
-		assertThat(expected).isEqualTo(list);
+		assertThat(list).isEqualTo(expected);
 	}
 
 	@Test
@@ -70,7 +70,7 @@ class MedicalRecordServiceTest {
 		medicalRecord.setAllergies(allergies);
 
 		// When
-		Mockito.when(medicalRecordDaoImpl.addAMedicalRecordToTheList(medicalRecord)).thenReturn(true);
+		Mockito.when(medicalRecordDaoImpl.addAMedicalRecordToTheList(Mockito.any(MedicalRecord.class))).thenReturn(true);
 
 		// Then
 		boolean expected = medicalRecordService.addAMedicalRecord(medicalRecord);
@@ -92,7 +92,7 @@ class MedicalRecordServiceTest {
 		medicalRecord.setAllergies(allergies);
 
 		// When
-		Mockito.when(medicalRecordDaoImpl.updateAMedicalRecordInTheList(medicalRecord)).thenReturn(true);
+		Mockito.when(medicalRecordDaoImpl.updateAMedicalRecordInTheList(Mockito.any(MedicalRecord.class))).thenReturn(true);
 
 		// Then
 		boolean expected = medicalRecordService.updateAMedicalRecord(medicalRecord);
@@ -106,7 +106,7 @@ class MedicalRecordServiceTest {
 		Mockito.when(medicalRecordDaoImpl.deleteAMedicalRecordFromTheList(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 
 		// Then
-		boolean expected = medicalRecordService.deleteAMedicalRecord("firstName", "lastName");
+		boolean expected = medicalRecordService.deleteAMedicalRecord("first name", "last name");
 		assertThat(expected).isTrue();
 	}
 

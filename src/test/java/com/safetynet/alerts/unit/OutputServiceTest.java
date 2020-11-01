@@ -46,7 +46,7 @@ class OutputServiceTest {
 
 		// Then
 		Output expected = outputService.findPersonsByFireStationNumber(6);
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		assertThat(data).isEqualToComparingFieldByField(expected);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ class OutputServiceTest {
 
 		// Then
 		Output expected = outputService.findChildrenByAddress("address");
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		assertThat(data).isEqualToComparingFieldByField(expected);
 
 	}
 
@@ -106,7 +106,7 @@ class OutputServiceTest {
 
 		// Then
 		Output expected = outputService.findPhoneNumbersByFireStationNumber(10);
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		assertThat(data).isEqualToComparingFieldByField(expected);
 	}
 
 	@Test
@@ -137,7 +137,7 @@ class OutputServiceTest {
 
 		// Then
 		Output expected = outputService.findPersonsByAddress("address");
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		assertThat(data).isEqualToComparingFieldByField(expected);
 	}
 
 	@Test
@@ -170,70 +170,27 @@ class OutputServiceTest {
 		List<Output> list2 = new ArrayList<>();
 		list2.add(person2);
 
-		List<String> medications2 = new ArrayList<>();
-		medications2.add("aznol:60mg");
-		medications2.add("hydrapermazol:900mg");
-		medications2.add("pharmacol:5000mg");
-		medications2.add("terazine:500mg");
-		List<String> allergies = new ArrayList<>();
-		allergies.add("peanut");
-		allergies.add("shellfish");
-		allergies.add("aznol");
-
 		Output person3 = new Output();
-		person3.setLastName("Zemicks");
-		person3.setAddress("892 Downing Ct");
-		person3.setPhone("841-874-7878");
-		person3.setAge(32);
-		person3.setMedications(medications2);
-		person3.setAllergies(allergies);
-
-		Output person4 = new Output();
-		person4.setLastName("Zemicks");
-		person4.setAddress("892 Downing Ct");
-		person4.setPhone("841-874-7512");
-		person4.setAge(35);
-		person4.setMedications(emptyList);
-		person4.setAllergies(emptyList);
-
-		Output person5 = new Output();
-		person5.setLastName("Zemicks");
-		person5.setAddress("892 Downing Ct");
-		person5.setPhone("841-874-7512");
-		person5.setAge(3);
-		person5.setMedications(emptyList);
-		person5.setAllergies(emptyList);
+		person3.setLastName("Marrack");
+		person3.setAddress("29 15th St");
+		person3.setPhone("841-874-6513");
+		person3.setAge(31);
+		person3.setMedications(emptyList);
+		person3.setAllergies(emptyList);
 
 		List<Output> list3 = new ArrayList<>();
 		list3.add(person3);
-		list3.add(person4);
-		list3.add(person5);
-
-		Output person6 = new Output();
-		person6.setLastName("Marrack");
-		person6.setAddress("29 15th St");
-		person6.setPhone("841-874-6513");
-		person6.setAge(31);
-		person6.setMedications(emptyList);
-		person6.setAllergies(emptyList);
-
-		List<Output> list4 = new ArrayList<>();
-		list4.add(person6);
 
 		List<Output> persons = new ArrayList<>();
 
 		persons.add(person);
 		persons.add(person2);
 		persons.add(person3);
-		persons.add(person4);
-		persons.add(person5);
-		persons.add(person6);
 
 		List<List<Output>> allLists = new ArrayList<>();
 		allLists.add(list);
 		allLists.add(list2);
 		allLists.add(list3);
-		allLists.add(list4);
 
 		Output data = new Output();
 		data.setPersonsGroupedByAddress(allLists);
@@ -244,7 +201,7 @@ class OutputServiceTest {
 		// Then
 		List<Integer> listOfInteger = Arrays.asList(1, 2, 3);
 		Output expected = outputService.findPersonsByFireStationNumbers(listOfInteger);
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		assertThat(data).isEqualToComparingFieldByField(expected);
 
 	}
 
@@ -272,8 +229,8 @@ class OutputServiceTest {
 				.thenReturn(list);
 
 		// Then
-		Output expected = outputService.findPersonByFirstAndLastName("Foster", "Shepard");
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		Output expected = outputService.findPersonByFirstAndLastName("first name", "last name");
+		assertThat(data).isEqualToComparingFieldByField(expected);
 
 	}
 
@@ -281,11 +238,7 @@ class OutputServiceTest {
 	void findEmailsByCity() {
 
 		// Given
-		List<String> emails = Arrays.asList("jaboyd@email.com", "drk@email.com", "tenz@email.com", "jaboyd@email.com",
-				"jaboyd@email.com", "drk@email.com", "tenz@email.com", "jaboyd@email.com", "jaboyd@email.com",
-				"tcoop@ymail.com", "lily@email.com", "soph@email.com", "ward@email.com", "zarc@email.com",
-				"reg@email.com", "jpeter@email.com", "jpeter@email.com", "aly@imail.com", "bstel@email.com",
-				"ssanw@email.com", "bstel@email.com", "clivfd@ymail.com", "gramps@email.com");
+		List<String> emails = Arrays.asList("jaboyd@email.com", "jpeter@email.com", "gramps@email.com");
 
 		List<Output> list = new ArrayList<>();
 
@@ -303,7 +256,7 @@ class OutputServiceTest {
 
 		// Then
 		Output expected = outputService.findEmailsByCity("City");
-		assertThat(expected).isEqualToComparingFieldByField(data);
+		assertThat(data).isEqualToComparingFieldByField(expected);
 
 	}
 

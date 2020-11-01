@@ -72,7 +72,7 @@ public class PersonController {
 			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The person was added to the list");
 			return ResponseEntity.status(HttpStatus.CREATED).body("The person was added to the list");
 		} else {
-			throw new ResourceException(HttpStatus.BAD_REQUEST, "A person with the same first and last name already exist");
+			throw new ResourceException(HttpStatus.BAD_REQUEST, "A person with the same first and last name already exist in the list");
 		}
 
 	}

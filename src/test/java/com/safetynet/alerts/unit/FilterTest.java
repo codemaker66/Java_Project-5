@@ -25,7 +25,7 @@ class FilterTest {
 	@Test
 	void filterTheAge() {
 
-		// When
+		// Given
 		Output person = new Output();
 		person.setFirstName("Lily");
 		person.setLastName("Cooper");
@@ -40,6 +40,7 @@ class FilterTest {
 		data.setPersons(list);
 		data.setAdultsCount(1);
 
+		// When
 		SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("age");
 
 		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", simpleBeanPropertyFilter);
@@ -50,13 +51,13 @@ class FilterTest {
 
 		// Then
 		MappingJacksonValue expected = filter.jsonFilter(data, 1);
-		assertThat(expected).usingRecursiveComparison().isEqualTo(value);
+		assertThat(value).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 	@Test
 	void filterTheFireStationNumber() {
 
-		// When
+		// Given
 		List<String> emptyList = new ArrayList<>();
 		List<String> medications = new ArrayList<>();
 		medications.add("tradoxidine:400mg");
@@ -76,6 +77,7 @@ class FilterTest {
 		data.setFireStation("This person is served by the firestaion number : 2");
 		data.setPersons(list);
 
+		// When
 		SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("fireStationNumber");
 
 		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", simpleBeanPropertyFilter);
@@ -86,13 +88,13 @@ class FilterTest {
 
 		// Then
 		MappingJacksonValue expected = filter.jsonFilter(data, 2);
-		assertThat(expected).usingRecursiveComparison().isEqualTo(value);
+		assertThat(value).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 	@Test
 	void noFilter() {
 
-		// When
+		// Given
 		Output phone = new Output();
 		phone.setPhone("841-874-9845");
 
@@ -102,6 +104,7 @@ class FilterTest {
 		Output data = new Output();
 		data.setPhoneNumbers(list);
 
+		// When
 		SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.serializeAll();
 
 		FilterProvider filterList = new SimpleFilterProvider().addFilter("DynamicFilter", simpleBeanPropertyFilter);
@@ -112,7 +115,7 @@ class FilterTest {
 
 		// Then
 		MappingJacksonValue expected = filter.jsonFilter(data, 0);
-		assertThat(expected).usingRecursiveComparison().isEqualTo(value);
+		assertThat(value).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 }

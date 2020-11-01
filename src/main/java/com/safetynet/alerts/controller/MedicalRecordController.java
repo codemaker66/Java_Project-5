@@ -77,11 +77,11 @@ public class MedicalRecordController {
 		}
 
 		if (medicalRecordService.addAMedicalRecord(medicalRecord)) {
-			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The medicalrecord was added to the list");
-			return ResponseEntity.status(HttpStatus.CREATED).body("The medicalrecord was added to the list");
+			logger.info("Httpstatus : " + HttpStatus.CREATED + ", Message : The medical record was added to the list");
+			return ResponseEntity.status(HttpStatus.CREATED).body("The medical record was added to the list");
 		} else {
 			throw new ResourceException(HttpStatus.BAD_REQUEST,
-					"A medicalrecord with the same first and last name already exist");
+					"A medical record with the same first and last name already exist in the list");
 		}
 	}
 
@@ -113,10 +113,10 @@ public class MedicalRecordController {
 		}
 
 		if (medicalRecordService.updateAMedicalRecord(medicalRecord)) {
-			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The medicalrecord was updated in the list");
-			return ResponseEntity.status(HttpStatus.OK).body("The medicalrecord was updated in the list");
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The medical record was updated in the list");
+			return ResponseEntity.status(HttpStatus.OK).body("The medical record was updated in the list");
 		} else {
-			throw new ResourceException(HttpStatus.NOT_FOUND, "This medicalrecord does not exist in the list");
+			throw new ResourceException(HttpStatus.NOT_FOUND, "This medical record does not exist in the list");
 		}
 
 	}
@@ -135,11 +135,11 @@ public class MedicalRecordController {
 		logger.info("The user requested the url : /medicalRecord with the DELETE method");
 
 		if (medicalRecordService.deleteAMedicalRecord(firstName, lastName)) {
-			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The medicalrecord was deleted from the list");
-			return ResponseEntity.status(HttpStatus.OK).body("The medicalrecord was deleted from the list");
+			logger.info("Httpstatus : " + HttpStatus.OK + ", Message : The medical record was deleted from the list");
+			return ResponseEntity.status(HttpStatus.OK).body("The medical record was deleted from the list");
 		} else {
 			throw new ResourceException(HttpStatus.NOT_FOUND,
-					"There are no medicalrecord for a person with the first name : "
+					"There are no medical record for a person with the first name : "
 							+ (firstName.isEmpty() ? "\"null value\"" : firstName) + " and the last name : "
 							+ (lastName.isEmpty() ? "\"null value\"" : lastName) + " in the list");
 		}

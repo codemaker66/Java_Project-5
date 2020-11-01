@@ -138,7 +138,7 @@ public class OutputService {
 	 * This method call the outputDaoImpl to retrieve one or many persons by first and last name.
 	 * 
 	 * @param firstName represent the first name of a person.
-	 * @param lastName  represent the last name of a person.
+	 * @param lastName represent the last name of a person.
 	 * @return a list of one or many persons (if they have the same last name).
 	 */
 	public Output findPersonByFirstAndLastName(String firstName, String lastName) {

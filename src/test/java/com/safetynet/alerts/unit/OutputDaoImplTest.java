@@ -37,20 +37,20 @@ class OutputDaoImplTest {
 		person.setPhone("841-874-9845");
 		person.setFireStationNumber(4);
 
-		List<Output> list = new ArrayList<>();
-		list.add(person);
+		List<Output> dataList = new ArrayList<>();
+		dataList.add(person);
 
 		// When
-		Mockito.when(dataManagement.load()).thenReturn(list);
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
 
 		// Then
 		List<Output> expected = outputDaoImpl.retrievePersonsByFireStationNumber(4);
 
-		List<Output> list2 = new ArrayList<>();
+		List<Output> list = new ArrayList<>();
 		person.setFireStationNumber(0);
-		list2.add(person);
+		list.add(person);
 
-		assertThat(expected).usingRecursiveComparison().isEqualTo(list2);
+		assertThat(list).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 	@Test
@@ -75,13 +75,13 @@ class OutputDaoImplTest {
 		father.setAge(35);
 		father.setAddress("892 Downing Ct");
 
-		List<Output> list = new ArrayList<>();
-		list.add(child);
-		list.add(mother);
-		list.add(father);
+		List<Output> dataList = new ArrayList<>();
+		dataList.add(child);
+		dataList.add(mother);
+		dataList.add(father);
 
 		// When
-		Mockito.when(dataManagement.load()).thenReturn(list);
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
 
 		// Then
 		List<Output> expected = outputDaoImpl.retrieveChildrenByAddress("892 Downing Ct");
@@ -94,10 +94,10 @@ class OutputDaoImplTest {
 		famillyMembers.add(father);
 		child.setFamillyMembers(famillyMembers);
 
-		List<Output> list2 = new ArrayList<>();
-		list2.add(child);
+		List<Output> list = new ArrayList<>();
+		list.add(child);
 
-		assertThat(expected).usingRecursiveComparison().isEqualTo(list2);
+		assertThat(list).usingRecursiveComparison().isEqualTo(expected);
 
 	}
 
@@ -109,20 +109,20 @@ class OutputDaoImplTest {
 		person.setPhone("841-874-9845");
 		person.setFireStationNumber(4);
 
-		List<Output> list = new ArrayList<>();
-		list.add(person);
+		List<Output> dataList = new ArrayList<>();
+		dataList.add(person);
 
 		// When
-		Mockito.when(dataManagement.load()).thenReturn(list);
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
 
 		// Then
 		List<Output> expected = outputDaoImpl.retrievePhoneNumbersByFireStationNumber(4);
 
-		List<Output> list2 = new ArrayList<>();
+		List<Output> list = new ArrayList<>();
 		person.setFireStationNumber(0);
-		list2.add(person);
+		list.add(person);
 
-		assertThat(expected).usingRecursiveComparison().isEqualTo(list2);
+		assertThat(list).usingRecursiveComparison().isEqualTo(expected);
 
 	}
 
@@ -142,20 +142,20 @@ class OutputDaoImplTest {
 		person.setAllergies(emptyList);
 		person.setAddress("951 LoneTree Rd");
 
-		List<Output> list = new ArrayList<>();
-		list.add(person);
+		List<Output> dataList = new ArrayList<>();
+		dataList.add(person);
 
 		// When
-		Mockito.when(dataManagement.load()).thenReturn(list);
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
 
 		// Then
 		List<Output> expected = outputDaoImpl.retrievePersonsByAddress("951 LoneTree Rd");
 
-		List<Output> list2 = new ArrayList<>();
+		List<Output> list = new ArrayList<>();
 		person.setAddress(null);
-		list2.add(person);
+		list.add(person);
 
-		assertThat(expected).usingRecursiveComparison().isEqualTo(list2);
+		assertThat(list).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 	@Test
@@ -190,24 +190,24 @@ class OutputDaoImplTest {
 		List<Output> list2 = new ArrayList<>();
 		list2.add(person2);
 
+		List<Output> dataList = new ArrayList<>();
+		dataList.add(person);
+		dataList.add(person2);
+
+		// When
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
+
+		// Then
+		List<Integer> listOfIntegers = Arrays.asList(5, 7);
+		List<Output> expected = outputDaoImpl.retrievePersonsByFireStationNumbers(listOfIntegers);
+
 		List<Output> allLists = new ArrayList<>();
+		person.setFireStationNumber(0);
+		person2.setFireStationNumber(0);
 		allLists.add(person);
 		allLists.add(person2);
 
-		// When
-		Mockito.when(dataManagement.load()).thenReturn(allLists);
-
-		// Then
-		List<Integer> integers = Arrays.asList(5, 7);
-		List<Output> expected = outputDaoImpl.retrievePersonsByFireStationNumbers(integers);
-
-		List<Output> allLists2 = new ArrayList<>();
-		person.setFireStationNumber(0);
-		person2.setFireStationNumber(0);
-		allLists2.add(person);
-		allLists2.add(person2);
-
-		assertThat(expected).usingRecursiveComparison().isEqualTo(allLists2);
+		assertThat(allLists).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 	@Test
@@ -224,20 +224,20 @@ class OutputDaoImplTest {
 		person.setMedications(emptyList);
 		person.setAllergies(emptyList);
 
-		List<Output> list = new ArrayList<>();
-		list.add(person);
+		List<Output> dataList = new ArrayList<>();
+		dataList.add(person);
 
 		// When
-		Mockito.when(dataManagement.load()).thenReturn(list);
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
 
 		// Then
 		List<Output> expected = outputDaoImpl.retrievePersonByFirstAndLastName("Foster", "Shepard");
 
-		List<Output> list2 = new ArrayList<>();
+		List<Output> list = new ArrayList<>();
 		person.setFirstName(null);
-		list2.add(person);
+		list.add(person);
 
-		assertThat(expected).usingRecursiveComparison().isEqualTo(list2);
+		assertThat(list).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 	@Test
@@ -247,19 +247,19 @@ class OutputDaoImplTest {
 		Output person = new Output();
 		person.setEmail("gramps@email.com");
 		person.setCity("Culver");
-		List<Output> list = Arrays.asList(person);
+		List<Output> dataList = Arrays.asList(person);
 
 		// When
-		Mockito.when(dataManagement.load()).thenReturn(list);
+		Mockito.when(dataManagement.load()).thenReturn(dataList);
 
 		// Then
 		List<Output> expected = outputDaoImpl.retrieveEmailsByCity("Culver");
 
-		List<Output> list2 = new ArrayList<>();
+		List<Output> list = new ArrayList<>();
 		person.setCity(null);
-		list2.add(person);
+		list.add(person);
 
-		assertThat(expected).usingRecursiveComparison().isEqualTo(list2);
+		assertThat(list).usingRecursiveComparison().isEqualTo(expected);
 	}
 
 }

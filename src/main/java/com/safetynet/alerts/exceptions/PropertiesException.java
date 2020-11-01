@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 
 public class PropertiesException extends RuntimeException {
+	
 	private static final long serialVersionUID = 1L;
 	private final HttpStatus httpStatus;
 	private final List<String> details;

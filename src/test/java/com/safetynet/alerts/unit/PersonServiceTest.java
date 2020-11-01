@@ -54,7 +54,7 @@ class PersonServiceTest {
 
 		// Then
 		List<Person> expected = personService.getAllPersons();
-		assertThat(expected).isEqualTo(list);
+		assertThat(list).isEqualTo(expected);
 	}
 
 	@Test
@@ -71,7 +71,7 @@ class PersonServiceTest {
 		person.setEmail("jaboyd@email.com");
 
 		// When
-		Mockito.when(PersonDaoImpl.addAPersonToTheList(person)).thenReturn(true);
+		Mockito.when(PersonDaoImpl.addAPersonToTheList(Mockito.any(Person.class))).thenReturn(true);
 
 		// Then
 		boolean expected = personService.addAPerson(person);
@@ -93,7 +93,7 @@ class PersonServiceTest {
 		person.setEmail("jaboydja@email.com");
 
 		// When
-		Mockito.when(PersonDaoImpl.updateAPersonInTheList(person)).thenReturn(true);
+		Mockito.when(PersonDaoImpl.updateAPersonInTheList(Mockito.any(Person.class))).thenReturn(true);
 
 		// Then
 		boolean expected = personService.updateAPerson(person);
@@ -108,7 +108,7 @@ class PersonServiceTest {
 		Mockito.when(PersonDaoImpl.deleteAPersonFromTheList(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 
 		// Then
-		boolean expected = personService.deleteAPerson("firstName", "lastName");
+		boolean expected = personService.deleteAPerson("first name", "last name");
 		assertThat(expected).isTrue();
 	}
 

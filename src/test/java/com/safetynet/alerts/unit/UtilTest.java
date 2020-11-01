@@ -18,39 +18,39 @@ class UtilTest {
 	void dateIsValid() {
 
 		// Given
-		String dateStr = "01/02/1980";
+		String dateAsString = "01/02/1980";
 
 		// When
-		boolean result = util.isValid(dateStr);
+		boolean validation = util.isValid(dateAsString);
 
 		// Then
-		assertThat(result).isTrue();
+		assertThat(validation).isTrue();
 	}
 
 	@Test
 	void dateIsNotValid() {
 
 		// Given
-		String dateStr = "01/02/3000";
+		String dateAsString = "01/02/3000";
 
 		// When
-		boolean result = util.isValid(dateStr);
+		boolean validation = util.isValid(dateAsString);
 
 		// Then
-		assertThat(result).isFalse();
+		assertThat(validation).isFalse();
 	}
 
 	@Test
 	void toLocalDateWithSuccess() {
 
 		// Given
-		String dateStr = "01/02/1980";
+		String dateAsString = "01/02/1980";
 
 		// When
-		int result = util.toLocalDate(dateStr);
+		int age = util.toLocalDate(dateAsString);
 
 		// Then
-		assertThat(result).isEqualTo(40);
+		assertThat(40).isEqualTo(age);
 
 	}
 
@@ -58,11 +58,11 @@ class UtilTest {
 	void toLocalDateWithException() {
 
 		// When
-		String wrongDate = "01021980";
+		String wrongDateFormat = "01021980";
 
 		// Then
 		Assertions.assertThrows(NullPointerException.class, () -> {
-			util.toLocalDate(wrongDate);
+			util.toLocalDate(wrongDateFormat);
 		});
 
 	}

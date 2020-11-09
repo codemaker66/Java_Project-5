@@ -33,13 +33,13 @@ Import the code into an IDE of your choice and run the AlertsApplication.java to
 
 Here is the list of the urls that you can call to get the data from the rest api :
 
-1. http://localhost:8080/firestation?stationNumber=<station_number>
-2. http://localhost:8080/childAlert?address=<address>
-3. http://localhost:8080/phoneAlert?firestation=<firestation_number>
-4. http://localhost:8080/fire?address=<address>
-5. http://localhost:8080/flood/stations?stations=<a list of station_numbers>
-6. http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
-7. http://localhost:8080/communityEmail?city=<city>
+1. http://localhost:8080/firestation?stationNumber="station_number"
+2. http://localhost:8080/childAlert?address="address"
+3. http://localhost:8080/phoneAlert?firestation="firestation_number"
+4. http://localhost:8080/fire?address="address"
+5. http://localhost:8080/flood/stations?stations="a_list_of_station_numbers"
+6. http://localhost:8080/personInfo?firstName="firstName"&lastName="lastName"
+7. http://localhost:8080/communityEmail?city="city"
 
 You can also use these urls to respectively get, add, update or delete a data when using the rest api :
 
